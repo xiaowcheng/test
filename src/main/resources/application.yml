@@ -1,0 +1,115 @@
+spring:
+  application:
+    name: fenqu-customer
+  datasource:
+    url: jdbc:oracle:thin:@10.1.69.62:1521:orcdb
+    username: jdtxcy
+    password: 123456
+    driver-class-name: oracle.jdbc.OracleDriver
+    type: com.alibaba.druid.pool.DruidDataSource
+  jpa:
+      show-sql: false
+      hibernate:
+        ddl-auto: none
+server:
+  port: 9763
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://10.1.60.110:8761/eureka
+  instance:
+    prefer-ip-address: true
+feign:
+  hystrix:
+    enabled: true
+  client:
+    config:
+      gitee-client:  # 这里指定的是 @FeignClient 的 name/value 属性的值
+        connectTimeout: 5000  # 链接超时时间
+        readTimeout: 5000 # 读超时
+        loggerLevel: none # 日志级别
+logging:
+  level:
+    com.ebupt.txcy.fenqu.feign.*: debug
+
+
+service-syswhitelist: microservice-syswhitelist-server
+service-syswhitelist-url: /txcy/sysWhiteList/v1/searchNumberList
+service-360: microservice-360
+service-360-url: microservice-360-url
+service-tx: microservice-tx
+service-tx-url: microservice-tx-url
+service-sougou: service-sougou
+service-sougou-url: service-sougou-url
+service-baidu: microservice-baidu
+service-baidu-url: microservice-baidu-url
+service-ali: microservice-ali
+service-ali-url: microservice-ali-url
+service-dianhuabang: microservice-dianhuabang
+service-dianhuabang-url: microservice-dianhuabang-url
+service-yellow: service-yellow
+service-deliver: service-deliver
+service-yellowbak: service-yellowbak
+service-spamlib: service-spamlib
+kafka:
+  BOOTSTRAP_SERVERS_CONFIG: 10.1.62.220:9092 # kafka ip:port
+  GROUP_ID_CONFIG: test                       # kafka group id
+  ENABLE_AUTO_COMMIT_CONFIG: false
+  AUTO_COMMIT_INTERVAL_MS_CONFIG: 1000
+  Topic: test                                 # kafka topic
+  AUTO_OFFSET_RESET_CONFIG: latest
+  MAX_POLL_RECORDS_CONFIG: 10000            #kafka batch num
+  SESSION_TIMEOUT_MS_CONFIG: 15000          #默认值为40秒。用于配置请求的超时时间
+  REQUEST_TIMEOUT_MS_CONFIG: 15000          #默认值为30秒，用于配置当前的consumer的session的超时时间，也就是client端多长时间不给server发送心跳就表示这个client端超时。
+threadPool:
+  coreSize: 10
+  maxSize: 100
+  queueCapacity: 9999
+  namePrefix: async-service-
+channel:
+  firstSourceid: 4
+  allChannel: tx,baidu,360,ali,sougou,dianhuabang
+  SourceidTenxun: 3
+  Sourceid360: 4
+  Sourceid12580: 5
+  Sourceidsougou: 7
+  Sourceidbaidu: 10
+  Sourceiddianhuabang: 12
+  Sourceidali: 14
+  type:
+    types:
+    - key: type0
+      value: 诈骗电话/疑似欺诈/疑似诈骗/色情诈骗
+    - key: type1
+      value: 疑似骚扰/骚扰电话/恐吓骚扰
+    - key: type2
+      value: 快递/送餐/外卖
+    - key: type3
+      value: 房产中介
+    - key: type4
+      value: 贷款中介
+    - key: type5
+      value: 招聘猎头
+    - key: type6
+      value: 装修
+    - key: type7
+      value: 广告推销
+    - key: type8
+      value: 出租车
+    - key: type9
+      value: 响一声
+    - key: type10
+      value: 保险理财
+    - key: type11
+      value: 教育培训
+    - key: type12
+      value: 企业
+    - key: type13
+      value: 客服
+    - key: type14
+      value: 金融
+    - key: type15
+      value: 疑似违法犯罪
+
+
