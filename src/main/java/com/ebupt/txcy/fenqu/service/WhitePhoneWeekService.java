@@ -4,14 +4,14 @@ import com.ebupt.txcy.fenqu.dao.WhitePhoneWeekRepository;
 import com.ebupt.txcy.fenqu.po.WhitePhone_week;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional(rollbackFor=Exception.class)
@@ -23,6 +23,24 @@ public class WhitePhoneWeekService {
     
     @Autowired
     JdbcTemplate jdbctemp;
+    
+    @Transactional
+    public List<String> selectAll(List<String> list){
+      
+        String batchArgs = "(";
+        for (int i=0;i<list.size()-2;i++) {
+            batchArgs = batchArgs+list.get(i)+",";
+        }
+        batchArgs = batchArgs+list.get(list.size()-1)+")";
+        
+        String sql="select phonenumber from txcy_whitephone_week where phonenumber in "+batchArgs;
+        List<String> mapList= jdbctemp.query(sql,new RowMapper<String>() {
+            @Override
+            public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return rs.getString("phonenumber");
+            }});
+        return mapList;
+    }
     
     
     @Transactional

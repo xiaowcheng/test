@@ -79,85 +79,85 @@ public class AsyncServiceImpl implements AsyncService {
                 return;
             }
         
-//            ConcurrentHashMap<String, QueryResp> maps = new ConcurrentHashMap();
-//            ArrayList<List<ThirdInfo>> arrayList = new ArrayList();
-//            Set<String> whitePhone = null;
-//            QueryChannel queryChannel = null;
-//            //2、获取 全部渠道配置
-//            if (allChannle.indexOf("360") != -1) {
-//                //发起360查询
-//                queryChannel = serviceFeign360.consumer(new PhoneList(newList));
-//                if (queryChannel == null || queryChannel.getCode() != 200) {
-//                    logger.error("360查询失败");
-//                } else {
-//                    maps.put("360", queryChannel.getData());
-//                }
-//            }
-//            if (allChannle.indexOf("tx") != -1) {
-//                //发起tx查询
-//                queryChannel = serviceFeignTx.consumer(new PhoneList(newList));
-//                if (queryChannel == null || queryChannel.getCode() != 200) {
-//                    logger.error("tx查询失败");
-//                } else {
-//                    maps.put("tx", queryChannel.getData());
-//                }
-//            }
-//            if (allChannle.indexOf("sougou") != -1) {
-//                //发起sougou查询
-//                queryChannel = serviceFeignSougou.consumer(new PhoneList(newList));
-//                if (queryChannel == null || queryChannel.getCode() != 200) {
-//                    logger.error("sougou查询失败");
-//                } else {
-//                    maps.put("sougou", queryChannel.getData());
-//                }
-//            }
-//            if (allChannle.indexOf("dianhuabang") != -1) {
-//                //发起dianhuabang查询
-//                queryChannel = serviceFeignDianhuabang.consumer(new PhoneList(newList));
-//                if (queryChannel == null || queryChannel.getCode() != 200) {
-//                    logger.error("dianhuabang查询失败");
-//                } else {
-//                    maps.put("dianhuabang", queryChannel.getData());
-//                }
-//            }
-//            if (allChannle.indexOf("baidu") != -1) {
-//                //发起baidu查询
-//                queryChannel = serviceFeignBaidu.consumer(new PhoneList(newList));
-//                if (queryChannel == null || queryChannel.getCode() != 200) {
-//                    logger.error("baidu查询失败");
-//                } else {
-//                    maps.put("baidu", queryChannel.getData());
-//
-//                }
-//            }
-//            if (allChannle.indexOf("ali") != -1) {
-//                //发起ali查询
-//                queryChannel = serviceFeignAli.consumer(new PhoneList(newList));
-//                if (queryChannel == null || queryChannel.getCode() != 200) {
-//                    logger.error("ali查询失败");
-//                } else {
-//                    maps.put("ali", queryChannel.getData());
-//                }
-//            }
-//
-//            //3、获取优先处理渠道
-//            //返回数据处理
-//            //4、调用入库逻辑（1、入库认证黄页、非认证、标记、其他）
-//            CompareUtil compareUtil = new CompareUtil();
-//            compareUtil.dealInfo(maps);
-//
-//            arrayList = compareUtil.getThirdArrayList();
-//            whitePhone = compareUtil.getWhitephoneList();
-//            Object yellowMap = compareUtil.getYellowMap();
-//
-//            DBTask task = new DBTask(whitePhone, arrayList, (ConcurrentHashMap) yellowMap);
+            ConcurrentHashMap<String, QueryResp> maps = new ConcurrentHashMap();
+            ArrayList<List<ThirdInfo>> arrayList = new ArrayList();
+            Set<String> whitePhone = null;
+            QueryChannel queryChannel = null;
+            //2、获取 全部渠道配置
+            if (allChannle.indexOf("360") != -1) {
+                //发起360查询
+                queryChannel = serviceFeign360.consumer(new PhoneList(newList));
+                if (queryChannel == null || queryChannel.getCode() != 200) {
+                    logger.error("360查询失败");
+                } else {
+                    maps.put("360", queryChannel.getData());
+                }
+            }
+            if (allChannle.indexOf("tx") != -1) {
+                //发起tx查询
+                queryChannel = serviceFeignTx.consumer(new PhoneList(newList));
+                if (queryChannel == null || queryChannel.getCode() != 200) {
+                    logger.error("tx查询失败");
+                } else {
+                    maps.put("tx", queryChannel.getData());
+                }
+            }
+            if (allChannle.indexOf("sougou") != -1) {
+                //发起sougou查询
+                queryChannel = serviceFeignSougou.consumer(new PhoneList(newList));
+                if (queryChannel == null || queryChannel.getCode() != 200) {
+                    logger.error("sougou查询失败");
+                } else {
+                    maps.put("sougou", queryChannel.getData());
+                }
+            }
+            if (allChannle.indexOf("dianhuabang") != -1) {
+                //发起dianhuabang查询
+                queryChannel = serviceFeignDianhuabang.consumer(new PhoneList(newList));
+                if (queryChannel == null || queryChannel.getCode() != 200) {
+                    logger.error("dianhuabang查询失败");
+                } else {
+                    maps.put("dianhuabang", queryChannel.getData());
+                }
+            }
+            if (allChannle.indexOf("baidu") != -1) {
+                //发起baidu查询
+                queryChannel = serviceFeignBaidu.consumer(new PhoneList(newList));
+                if (queryChannel == null || queryChannel.getCode() != 200) {
+                    logger.error("baidu查询失败");
+                } else {
+                    maps.put("baidu", queryChannel.getData());
 
-//            this.logger.info("newCachedThreadPool---");
-//            ExecutorService executor = Executors.newCachedThreadPool();
-//            executor.submit(task);
-//            executor.shutdown();
+                }
+            }
+            if (allChannle.indexOf("ali") != -1) {
+                //发起ali查询
+                queryChannel = serviceFeignAli.consumer(new PhoneList(newList));
+                if (queryChannel == null || queryChannel.getCode() != 200) {
+                    logger.error("ali查询失败");
+                } else {
+                    maps.put("ali", queryChannel.getData());
+                }
+            }
+
+            //3、获取优先处理渠道
+            //返回数据处理
+            //4、调用入库逻辑（1、入库认证黄页、非认证、标记、其他）
+            CompareUtil compareUtil = new CompareUtil();
+            compareUtil.dealInfo(maps);
+
+            arrayList = compareUtil.getThirdArrayList();
+            whitePhone = compareUtil.getWhitephoneList();
+            Object yellowMap = compareUtil.getYellowMap();
+
+            DBTask task = new DBTask(whitePhone, arrayList, (ConcurrentHashMap) yellowMap);
+
+            this.logger.info("newCachedThreadPool---");
+            ExecutorService executor = Executors.newCachedThreadPool();
+            executor.submit(task);
+            executor.shutdown();
             Thread.sleep(20000);
-//            this.logger.info("executorservice shutdown---");
+            this.logger.info("executorservice shutdown---");
 
         }catch(Exception e){
             e.printStackTrace();

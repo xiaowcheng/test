@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.ebupt.txcy</groupId>
-    <artifactId>fenqu-customer</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>fenqu-customer</name>
+    <artifactId>microservice-fenqu-customer</artifactId>
+    <version>0.0.1</version>
+    <name>microservice-fenqu-customer</name>
     <description>Demo project</description>
 
     <properties>

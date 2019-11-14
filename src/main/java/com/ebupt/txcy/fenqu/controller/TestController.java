@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.HashSet;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @RestController
 @RequestMapping("/consumer")
@@ -31,16 +31,20 @@ public class TestController {
 //        PhoneList phoneList = new PhoneList(list);
 //        return channelServiceFeignClientInterface.consumer(phoneList);
         
-        Set<String> list = new HashSet<>();
-        for (int i = 0; i < 10000; i++) {
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < 1000; i++) {
             list.add(i+"");
         }
+    
+    
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss SSS");
+        System.out.println(sdf.format(new Date()));
+        List<String> a = whitePhoneWeekService.selectAll(list);
         
-       
-        whitePhoneWeekService.saveAll(list);
-        
-   
-        
+    
+    
+        System.out.println(a);
+        System.out.println(sdf.format(new Date()));
         return "2";
     }
 }
