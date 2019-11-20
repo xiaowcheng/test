@@ -1,6 +1,4 @@
 spring:
-  application:
-    name: fenqu-customer
   datasource:
     url: jdbc:oracle:thin:@10.1.69.62:1521:orcdb
     username: jdtxcy
@@ -20,6 +18,11 @@ eureka:
       defaultZone: http://10.1.60.110:8761/eureka
   instance:
     prefer-ip-address: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
 feign:
   hystrix:
     enabled: true
@@ -59,7 +62,7 @@ kafka:
   AUTO_COMMIT_INTERVAL_MS_CONFIG: 1000
   Topic: test                                 # kafka topic
   AUTO_OFFSET_RESET_CONFIG: latest
-  MAX_POLL_RECORDS_CONFIG: 10000            #kafka batch num
+  MAX_POLL_RECORDS_CONFIG: 5              #kafka batch num
   SESSION_TIMEOUT_MS_CONFIG: 15000          #默认值为40秒。用于配置请求的超时时间
   REQUEST_TIMEOUT_MS_CONFIG: 15000          #默认值为30秒，用于配置当前的consumer的session的超时时间，也就是client端多长时间不给server发送心跳就表示这个client端超时。
 threadPool:
@@ -68,7 +71,7 @@ threadPool:
   queueCapacity: 9999
   namePrefix: async-service-
 channel:
-  firstSourceid: 4
+  firstSourceid: 4                           #优先使用第三方渠道
   allChannel: tx,baidu,360,ali,sougou,dianhuabang
   SourceidTenxun: 3
   Sourceid360: 4
@@ -77,7 +80,7 @@ channel:
   Sourceidbaidu: 10
   Sourceiddianhuabang: 12
   Sourceidali: 14
-  type:
+  type:                                       #type信息
     types:
     - key: type0
       value: 诈骗电话/疑似欺诈/疑似诈骗/色情诈骗
