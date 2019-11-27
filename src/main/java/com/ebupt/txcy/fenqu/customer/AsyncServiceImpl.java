@@ -3,6 +3,7 @@ package com.ebupt.txcy.fenqu.customer;
 import com.ebupt.txcy.fenqu.feign.channel.*;
 import com.ebupt.txcy.fenqu.util.CompareUtil;
 import com.ebupt.txcy.fenqu.util.DBTask;
+import com.ebupt.txcy.fenqu.util.RedisUtil;
 import com.ebupt.txcy.fenqu.vo.channel.PhoneList;
 import com.ebupt.txcy.fenqu.vo.channel.QueryChannel;
 import com.ebupt.txcy.fenqu.vo.channel.QueryResp;
@@ -15,9 +16,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -26,6 +26,9 @@ import java.util.concurrent.Executors;
 public class AsyncServiceImpl implements AsyncService {
     
     private static final Logger logger = LoggerFactory.getLogger(AsyncServiceImpl.class);
+    
+    @Resource
+    private RedisUtil redisUtil;
     
     @Resource
     ServiceFeign360 serviceFeign360;
@@ -49,15 +52,19 @@ public class AsyncServiceImpl implements AsyncService {
     @Value("${channel.allChannel}")
     private String allChannle;
     
+    @Value("${spring.redis.white_week_searchtime}")
+    private int white_week_searchtime;
+    
     @Override
 //    @Async("asyncServiceExecutor")
     public void executeAsync(List<String> phoneList) {
-//        logger.info("start executeAsync");
+        logger.info("start executeAsync");
+        phoneList = new ArrayList<>(new HashSet<>(phoneList)) ;
         List<String> newList = new ArrayList(phoneList.size());
         try {
             //1、号码处理
             for (int i = 0; i < phoneList.size(); i++) {
-                logger.info("i:" + i + ";phone:" + phoneList.get(i));
+             logger.info("i:" + i + ";phone:" + phoneList.get(i));
                 if (phoneList.size() > 0) {
                     String phone = (String) phoneList.get(0);
                     String newphone = null;
@@ -72,18 +79,24 @@ public class AsyncServiceImpl implements AsyncService {
                     }
                     newList.add(newphone);
                 }
-//                Thread.sleep(200000);
+
             }
+//            Thread.sleep(200000);
+//            return;
+            //2、获取 全部渠道配置
             if (newList.size() <=0) {
                 logger.info("没有数据");
                 return;
             }
-        
+
+            //去除txcy_whitelist_week 数据
+            newList = delWhiteWeek(newList);
+
             ConcurrentHashMap<String, QueryResp> maps = new ConcurrentHashMap();
-            ArrayList<List<ThirdInfo>> arrayList = new ArrayList();
+            ArrayList<List<ThirdInfo>> arrayList = new ArrayList<>();
             Set<String> whitePhone = null;
             QueryChannel queryChannel = null;
-            //2、获取 全部渠道配置
+
             if (allChannle.indexOf("360") != -1) {
                 //发起360查询
                 queryChannel = serviceFeign360.consumer(new PhoneList(newList));
@@ -156,12 +169,36 @@ public class AsyncServiceImpl implements AsyncService {
             ExecutorService executor = Executors.newCachedThreadPool();
             executor.submit(task);
             executor.shutdown();
-            Thread.sleep(20000);
             this.logger.info("executorservice shutdown---");
 
         }catch(Exception e){
             e.printStackTrace();
         }
         logger.info("end executeAsync");
+    }
+    
+    public List delWhiteWeek(List list){
+        try{
+            String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+            redisUtil.sSetAndTime(uuid,300,list.toArray());
+            
+            //获取需要判断多少内数据有效
+            List days = new ArrayList();
+            for (int i = 0; i < white_week_searchtime ; i++) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.DAY_OF_YEAR,-i);
+                String nowDay = "white_week_"+new SimpleDateFormat("yyyyMMdd").format(calendar.getTime());
+                days.add(nowDay);
+            }
+            
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss SSS");
+//        System.out.println(sdf.format(new Date()));
+            Set set = redisUtil.sdiff(uuid,days);
+//        System.out.println(sdf.format(new Date()));
+            return new ArrayList(set);
+        }catch (Exception e){
+            logger.error("redis del whiteweek err"+e);
+            return list;
+        }
     }
 }

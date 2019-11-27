@@ -3,27 +3,18 @@ package com.ebupt.txcy.fenqu.controller;
 import com.ebupt.txcy.fenqu.customer.AsyncService;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
-import org.springframework.kafka.core.DefaultKafkaProducerFactory;
-import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.support.Acknowledgment;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 
@@ -102,7 +93,7 @@ public class FenquController{
         logger.info("records.size:"+String.valueOf(records.size()));
         List<String> phoneList = new ArrayList<>(MAX_POLL_RECORDS_CONFIG);
         for (ConsumerRecord<?, String> record : records){
-            logger.info("批量监听------:"+record.value());
+//            logger.info("批量监听------:"+record.value());
             phoneList.add(record.value());
             ack.acknowledge();//手动提交偏移量            
         }
@@ -113,30 +104,5 @@ public class FenquController{
 //    public void kafkaListenOne(ConsumerRecord<?, String> record){
 //        logger.info(record.value());
 //    }
-    
-//    @Override
-    public void run(String... strings) throws Exception {
-        Properties props = new Properties();
-        
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,BOOTSTRAP_SERVERS_CONFIG);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG ,GROUP_ID_CONFIG) ;
-        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, ENABLE_AUTO_COMMIT_CONFIG);
-        props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, AUTO_COMMIT_INTERVAL_MS_CONFIG);
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        
-        KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(props);
-        consumer.subscribe(Arrays.asList(Topic));
-
-        while (true) {
-            ConsumerRecords<String, String> records = consumer.poll(100);
-            for (ConsumerRecord<String, String> record : records) {
-
-                System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
-                
-
-            }
-        }
-    }
     
 }

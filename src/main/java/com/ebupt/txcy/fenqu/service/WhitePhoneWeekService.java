@@ -2,12 +2,15 @@ package com.ebupt.txcy.fenqu.service;
 
 import com.ebupt.txcy.fenqu.dao.WhitePhoneWeekRepository;
 import com.ebupt.txcy.fenqu.po.WhitePhone_week;
+import com.ebupt.txcy.fenqu.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -17,6 +20,9 @@ import java.util.*;
 @Transactional(rollbackFor=Exception.class)
 public class WhitePhoneWeekService {
     
+    @Value("${spring.redis.white_week_expiretime}")
+    private int white_week_expiretime;
+    
     @Autowired
     WhitePhoneWeekRepository whitePhoneWeekRepository;
     
@@ -24,6 +30,14 @@ public class WhitePhoneWeekService {
     @Autowired
     JdbcTemplate jdbctemp;
     
+    @Resource
+    private RedisUtil redisUtil;
+    
+    /**
+     * 获取数据库中是否存在白名单数据
+     * @param list
+     * @return
+     */
     @Transactional
     public List<String> selectAll(List<String> list){
       
@@ -42,7 +56,10 @@ public class WhitePhoneWeekService {
         return mapList;
     }
     
-    
+    /**
+     * 存入数据库
+     * @param set
+     */
     @Transactional
     public void saveAll(Set<String> set){
         List<Object[]> batchArgs=new ArrayList<Object[]>();
@@ -54,5 +71,10 @@ public class WhitePhoneWeekService {
                 "        insert\n" +
                 "        values (b.phonenumber,trunc(sysdate,'DD'))";
         jdbctemp.batchUpdate(sql,batchArgs);
+    }
+    
+    public void saveRedisAll(Set<String> set){
+        String key = "white_week_"+new SimpleDateFormat("yyyyMMdd").format(new Date());
+        redisUtil.sSetAndTime(key,white_week_expiretime,set.toArray());
     }
 }

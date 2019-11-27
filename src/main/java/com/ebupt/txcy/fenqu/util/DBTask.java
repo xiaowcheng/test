@@ -20,6 +20,7 @@ import com.ebupt.txcy.fenqu.vo.yellowbak.Yellowpagelibbak;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.annotation.Resource;
 
@@ -48,6 +49,9 @@ public class DBTask implements Runnable
   
   @Autowired
   private TypeUtil typeUtil;
+  
+  @Value("${quhao-list}")
+  private List<String> list;
   
   public DBTask(Set<String> whitePhone, ArrayList<List<ThirdInfo>> arrayList, ConcurrentHashMap<Integer, ArrayList<YellowInfo>> yellowMap)
   {
@@ -81,7 +85,6 @@ public class DBTask implements Runnable
   
   public String getNewPhone(String phone)
   {
-    HashSet<String> quhao = ConfigUtil.quhao;
     if (phone.trim().startsWith("+")) {
       phone = "00" + phone;
     }
@@ -92,13 +95,13 @@ public class DBTask implements Runnable
     }
     
     if (phone.length() == 10) {
-      if (quhao.contains(phone.substring(2))) {
+      if (list.contains(phone.substring(2))) {
         phone = "0" + phone;
       }
     }
     if ((phone.length() == 11) && 
       (!phone.startsWith("1")) && 
-      (quhao.contains(phone.substring(3)))) {
+      (list.contains(phone.substring(3)))) {
       phone = "0" + phone;
     }
     return phone;
@@ -132,10 +135,10 @@ public class DBTask implements Runnable
         //emp.classBType is null
         if (info.getClassBType() == null) {
           //删除黄页数据
-          yellowpagelibObj = new YellowpagelibObj(info.getPhone(),"",info.getProfession(),info.getClassBType(),info.getSourceID()+"");
+          yellowpagelibObj = new YellowpagelibObj(getNewPhone(info.getPhone()),"",info.getProfession(),info.getClassBType(),info.getSourceID()+"");
           delList.add(yellowpagelibObj);
         }else{
-          yellowpagelibObj = new YellowpagelibObj(info.getPhone(),"",info.getProfession(),info.getClassBType(),info.getSourceID()+"");
+          yellowpagelibObj = new YellowpagelibObj(getNewPhone(info.getPhone()),"",info.getProfession(),info.getClassBType(),info.getSourceID()+"");
           addList.add(yellowpagelibObj);
         }
       }
@@ -162,10 +165,10 @@ public class DBTask implements Runnable
         //批量插入 yellowbakpagelib
         if (info.getClassBType() == null) {
           //删除黄页数据
-          yellowpagelibbak = new Yellowpagelibbak(info.getPhone(),"",info.getProfession(),info.getClassBType(),info.getSourceID()+"");
+          yellowpagelibbak = new Yellowpagelibbak(getNewPhone(info.getPhone()),"",info.getProfession(),info.getClassBType(),info.getSourceID()+"");
           delList.add(yellowpagelibbak);
         }else{
-          yellowpagelibbak = new Yellowpagelibbak(info.getPhone(),"",info.getProfession(),info.getClassBType(),info.getSourceID()+"");
+          yellowpagelibbak = new Yellowpagelibbak(getNewPhone(info.getPhone()),"",info.getProfession(),info.getClassBType(),info.getSourceID()+"");
           addList.add(yellowpagelibbak);
         }
       }
@@ -198,10 +201,10 @@ public class DBTask implements Runnable
           String type = typeUtil.dealNewType(info.getType());
           if (i == 0) {
             //插入ndeliver
-            deliverList.add(new NdeliverObj(info.getPhone(),"","",info.getCount()+"",type,info.getSourceID()+""));
+            deliverList.add(new NdeliverObj(getNewPhone(info.getPhone()),"","",info.getCount()+"",type,info.getSourceID()+""));
           }
           //插入spmlib表
-          spamlibList.add(new Spamlib(info.getPhone(),(int)info.getSourceID(),type,info.getCount(),info.getId()));
+          spamlibList.add(new Spamlib(getNewPhone(info.getPhone()),(int)info.getSourceID(),type,info.getCount(),info.getId()));
           i++;
         }
       }
@@ -218,13 +221,14 @@ public class DBTask implements Runnable
     }
     
    
-    if (whitePhone == null) {
+    if (whitePhone == null || whitePhone.size() <= 0) {
+      logger.info("third rerun white_week data is null");
       return;
     }
 
     try
     {
-      whitePhoneWeekService.saveAll(whitePhone);
+      whitePhoneWeekService.saveRedisAll(whitePhone);
     }
     catch (Exception e)
     {

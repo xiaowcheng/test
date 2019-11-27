@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient( value = "${service-360}",configuration = FeignConfiguration.class,fallback = QueryChannelClientFallback.class)
 public interface ServiceFeign360 {
     
-    @PostMapping(value ="${service-360-url}")
+    @PostMapping(value ="/txcy/thirdinquiry360/v1/search360")
     QueryChannel consumer(@RequestBody PhoneList phoneList);
     
 }

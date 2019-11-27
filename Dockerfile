@@ -1,8 +1,9 @@
 FROM openjdk:8u102-jre
-MAINTAINER xxw xxw@ebupt.com
-COPY /target/eureka-0.0.1-SNAPSHOT.jar /eureka.jar
-ENTRYPOINT ["java", "-jar", "/eureka.jar"]
-EXPOSE 8761
+MAINTAINER chengyiwu
+COPY /target/microservice-fenqu-customer-0.0.1.jar /microservice-fenqu-customer-0.0.1.jar
+ENTRYPOINT ["java", "-jar", "/microservice-fenqu-customer-0.0.1.jar"]
+ENTRYPOINT exec java $JAVA_OPTS -jar microservice-fenqu-customer-0.0.1.jar
+EXPOSE 9763
 
 
 

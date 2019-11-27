@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Feign 客户端配置
  *
- * @author xushiling
+ * @author chengyiwu
  * @date 2018/8/13
  */
 @Configuration
