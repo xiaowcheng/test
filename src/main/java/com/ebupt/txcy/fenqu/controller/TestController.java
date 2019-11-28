@@ -29,26 +29,4 @@ public class TestController {
         list.add(param);
         return channelServiceFeignClientInterface.consumer(new PhoneList(list)).toString();
     }
-    @GetMapping("/test")
-    public String getTest( @RequestParam String param ) {
-    
-//        PhoneList phoneList = new PhoneList(list);
-//        return channelServiceFeignClientInterface.consumer(phoneList);
-        
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 1000; i++) {
-            list.add(i+"");
-        }
-    
-    
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss SSS");
-        System.out.println(sdf.format(new Date()));
-        List<String> a = whitePhoneWeekService.selectAll(list);
-        
-    
-    
-        System.out.println(a);
-        System.out.println(sdf.format(new Date()));
-        return "2";
-    }
 }
