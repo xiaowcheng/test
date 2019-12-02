@@ -11,14 +11,16 @@ eureka:
     prefer-ip-address: true
 ---
 spring:
-  profiles: prod
+  profiles: prov
   application:
     name: microservice-fenqu-customer
   cloud:
     config:
-      uri: http://10.1.60.109:8763/
+      profile: prov
       label: master
-      profile: prod
+      discovery:
+        enalbe: true
+        service-id: microservice-config-server
 ---
 spring:
   profiles: dev
@@ -38,7 +40,9 @@ spring:
     name: microservice-fenqu-customer
   cloud:
     config:
-      uri: http://10.1.60.109:8763/
-      label: master
       profile: test
+      label: master
+      discovery:
+        enalbe: true
+        service-id: microservice-config-server
 
