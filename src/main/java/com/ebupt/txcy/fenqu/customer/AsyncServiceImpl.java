@@ -64,9 +64,9 @@ public class AsyncServiceImpl implements AsyncService {
         try {
             //1、号码处理
             for (int i = 0; i < phoneList.size(); i++) {
-             logger.info("i:" + i + ";phone:" + phoneList.get(i));
+//             logger.info("i:" + i + ";phone:" + phoneList.get(i));
                 if (phoneList.size() > 0) {
-                    String phone = (String) phoneList.get(0);
+                    String phone = (String) phoneList.get(i);
                     String newphone = null;
                     if (phone.trim().startsWith("+86")) {
                         newphone = phone.trim().substring(3);
