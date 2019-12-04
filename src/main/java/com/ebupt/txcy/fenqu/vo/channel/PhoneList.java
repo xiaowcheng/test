@@ -4,17 +4,17 @@ import java.util.List;
 
 public class PhoneList {
     
-    private List<String> phoneNumbers;
+    private List<String> phoneList;
     
-    public PhoneList(List<String> phoneNumbers) {
-        this.phoneNumbers = phoneNumbers;
+    public PhoneList(List<String> phoneList) {
+        this.phoneList = phoneList;
     }
     
-    public List<String> getPhoneNumbers() {
-        return phoneNumbers;
+    public List<String> getPhoneList() {
+        return phoneList;
     }
     
-    public void setPhoneNumbers(List<String> phoneNumbers) {
-        this.phoneNumbers = phoneNumbers;
+    public void setPhoneList(List<String> phoneList) {
+        this.phoneList = phoneList;
     }
 }

@@ -9,7 +9,7 @@ import com.ebupt.txcy.fenqu.vo.RequestBody;
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import com.ebupt.txcy.fenqu.vo.channel.PhoneList;
+import com.ebupt.txcy.fenqu.vo.PhoneList;
 
 @RestController
 @RequestMapping("/consumer")

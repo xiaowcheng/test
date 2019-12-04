@@ -1,7 +1,7 @@
 package com.ebupt.txcy.fenqu.feign;
 
 import com.ebupt.txcy.fenqu.config.FeignConfiguration;
-import com.ebupt.txcy.fenqu.vo.channel.PhoneList;
+import com.ebupt.txcy.fenqu.vo.PhoneList;
 //import com.ebupt.txcy.fenqu.vo.RequestBody;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;

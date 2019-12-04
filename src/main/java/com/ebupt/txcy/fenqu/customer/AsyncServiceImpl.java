@@ -56,7 +56,6 @@ public class AsyncServiceImpl implements AsyncService {
     private int white_week_searchtime;
     
     @Override
-//    @Async("asyncServiceExecutor")
     public void executeAsync(List<String> phoneList) {
         logger.info("start executeAsync");
         phoneList = new ArrayList<>(new HashSet<>(phoneList)) ;
