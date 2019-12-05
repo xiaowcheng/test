@@ -31,6 +31,9 @@ public class AsyncServiceImpl implements AsyncService {
     private RedisUtil redisUtil;
     
     @Resource
+    private  DBTask dbTask;
+    
+    @Resource
     ServiceFeign360 serviceFeign360;
     
     @Resource
@@ -162,13 +165,8 @@ public class AsyncServiceImpl implements AsyncService {
             whitePhone = compareUtil.getWhitephoneList();
             Object yellowMap = compareUtil.getYellowMap();
 
-            DBTask task = new DBTask(whitePhone, arrayList, (ConcurrentHashMap) yellowMap);
-
-            this.logger.info("newCachedThreadPool---");
-            ExecutorService executor = Executors.newCachedThreadPool();
-            executor.submit(task);
-            executor.shutdown();
-            this.logger.info("executorservice shutdown---");
+            
+            dbTask.run(whitePhone, arrayList, (ConcurrentHashMap) yellowMap);
 
         }catch(Exception e){
             e.printStackTrace();

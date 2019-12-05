@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient( value = "${service-ali}",configuration = FeignConfiguration.class,fallback = QueryChannelClientFallback.class)
 public interface ServiceFeignAli {
     
-    @PostMapping(value ="/txcy/thirdphone/v1/searchAli")
+    @PostMapping(value ="/txcy/thirdinquiryali/v1/searchali")
     QueryChannel consumer(@RequestBody PhoneList phoneList);
     
 }

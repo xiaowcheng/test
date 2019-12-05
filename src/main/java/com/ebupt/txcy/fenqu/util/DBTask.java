@@ -21,10 +21,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
-public class DBTask implements Runnable
+@Service
+public class DBTask
 {
   private final Logger logger = LoggerFactory.getLogger(DBTask.class);
   
@@ -53,15 +56,14 @@ public class DBTask implements Runnable
   @Value("${quhao-list}")
   private List<String> list;
   
-  public DBTask(Set<String> whitePhone, ArrayList<List<ThirdInfo>> arrayList, ConcurrentHashMap<Integer, ArrayList<YellowInfo>> yellowMap)
+  
+  @Async("asyncServiceExecutor")
+  public void run(Set<String> whitePhone, ArrayList<List<ThirdInfo>> arrayList, ConcurrentHashMap<Integer, ArrayList<YellowInfo>> yellowMap)
   {
     this.whitePhone = whitePhone;
     this.arrayList = arrayList;
     this.yellowMap = yellowMap;
-  }
-  
-  public void run()
-  {
+    
     try
     {
       inquiryDBInsert();
