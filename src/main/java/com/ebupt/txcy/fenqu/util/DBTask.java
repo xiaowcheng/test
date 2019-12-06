@@ -199,6 +199,10 @@ public class DBTask
       List<Spamlib> spamlibList = new ArrayList<>();
       for (List<ThirdInfo> array : arrayList) {
         int i = 0;
+        if(array == null || array.size() <= 0){
+           logger.info("array is null");
+           return;
+        }
         for (ThirdInfo info : array) {
           String type = typeUtil.dealNewType(info.getType());
           if (i == 0) {
