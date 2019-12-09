@@ -6,9 +6,9 @@ public class QueryChannel {
     
     private String msg;
     
-    private QueryResp data;
+    private QueryRespItem data;
     
-    public QueryChannel(int code, String msg, QueryResp data) {
+    public QueryChannel(int code, String msg, QueryRespItem data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
@@ -30,11 +30,11 @@ public class QueryChannel {
         this.msg = msg;
     }
     
-    public QueryResp getData() {
+    public QueryRespItem getData() {
         return data;
     }
     
-    public void setData(QueryResp data) {
+    public void setData(QueryRespItem data) {
         this.data = data;
     }
     
