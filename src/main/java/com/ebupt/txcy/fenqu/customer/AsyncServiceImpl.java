@@ -102,7 +102,7 @@ public class AsyncServiceImpl implements AsyncService {
             if (allChannle.indexOf("360") != -1) {
                 //发起360查询
                 queryChannel = serviceFeign360.consumer(new PhoneList(newList));
-                if (queryChannel == null || queryChannel.getCode() != 200) {
+                if (queryChannel == null || !"0000".equals(queryChannel.getCode())) {
                     logger.error("360查询失败");
                 } else {
                     maps.put("360", queryChannel.getData());
@@ -111,7 +111,7 @@ public class AsyncServiceImpl implements AsyncService {
             if (allChannle.indexOf("tx") != -1) {
                 //发起tx查询
                 queryChannel = serviceFeignTx.consumer(new PhoneList(newList));
-                if (queryChannel == null || queryChannel.getCode() != 200) {
+                if (queryChannel == null || !"0000".equals(queryChannel.getCode())) {
                     logger.error("tx查询失败");
                 } else {
                     maps.put("tx", queryChannel.getData());
@@ -120,7 +120,7 @@ public class AsyncServiceImpl implements AsyncService {
             if (allChannle.indexOf("sougou") != -1) {
                 //发起sougou查询
                 queryChannel = serviceFeignSougou.consumer(new PhoneList(newList));
-                if (queryChannel == null || queryChannel.getCode() != 200) {
+                if (queryChannel == null || !"0000".equals(queryChannel.getCode())) {
                     logger.error("sougou查询失败");
                 } else {
                     maps.put("sougou", queryChannel.getData());
@@ -129,7 +129,7 @@ public class AsyncServiceImpl implements AsyncService {
             if (allChannle.indexOf("dianhuabang") != -1) {
                 //发起dianhuabang查询
                 queryChannel = serviceFeignDianhuabang.consumer(new PhoneList(newList));
-                if (queryChannel == null || queryChannel.getCode() != 200) {
+                if (queryChannel == null || !"0000".equals(queryChannel.getCode())) {
                     logger.error("dianhuabang查询失败");
                 } else {
                     maps.put("dianhuabang", queryChannel.getData());
@@ -138,7 +138,7 @@ public class AsyncServiceImpl implements AsyncService {
             if (allChannle.indexOf("baidu") != -1) {
                 //发起baidu查询
                 queryChannel = serviceFeignBaidu.consumer(new PhoneList(newList));
-                if (queryChannel == null || queryChannel.getCode() != 200) {
+                if (queryChannel == null || !"0000".equals(queryChannel.getCode())) {
                     logger.error("baidu查询失败");
                 } else {
                     maps.put("baidu", queryChannel.getData());
@@ -148,7 +148,7 @@ public class AsyncServiceImpl implements AsyncService {
             if (allChannle.indexOf("ali") != -1) {
                 //发起ali查询
                 queryChannel = serviceFeignAli.consumer(new PhoneList(newList));
-                if (queryChannel == null || queryChannel.getCode() != 200) {
+                if (queryChannel == null || !"0000".equals(queryChannel.getCode())) {
                     logger.error("ali查询失败");
                 } else {
                     maps.put("ali", queryChannel.getData());
