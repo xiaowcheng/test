@@ -4,7 +4,7 @@ import java.util.List;
 
 public class QueryChannel {
     
-    private int code;
+    private String code;
     
     private String msg;
     
@@ -12,18 +12,18 @@ public class QueryChannel {
     
     private int name;
     
-    public QueryChannel(int code, String msg, List<QueryRespItem> data, int name) {
+    public QueryChannel(String code, String msg, List<QueryRespItem> data, int name) {
         this.code = code;
         this.msg = msg;
         this.data = data;
         this.name = name;
     }
     
-    public int getCode() {
+    public String getCode() {
         return code;
     }
     
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
     

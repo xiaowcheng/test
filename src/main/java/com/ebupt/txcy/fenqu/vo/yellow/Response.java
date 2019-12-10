@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Response {
     
-    private int code;
+    private String code;
     
     private String msg;
     
@@ -13,17 +13,17 @@ public class Response {
     public Response() {
     }
     
-    public Response(int code, String msg, List<PhoneListResponse> data) {
+    public Response(String code, String msg, List<PhoneListResponse> data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
     }
     
-    public int getCode() {
+    public String getCode() {
         return code;
     }
     
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
     

@@ -10,7 +10,7 @@ public class QueryChannelClientFallback implements ServiceFeignAli,ServiceFeign3
     @Override
     public QueryChannel consumer(PhoneList phoneList) {
         
-        return new QueryChannel(500,"查询失败",null,0);
+        return new QueryChannel("1000","查询失败",null,0);
     }
     
 }
