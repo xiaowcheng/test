@@ -6,7 +6,7 @@ public class NdeliverObj {
     
     private String phoneNumber;
     
-    private String datatype;
+    private String dataType;
     
     private String sourceName;
     
@@ -21,18 +21,18 @@ public class NdeliverObj {
     public NdeliverObj() {
     }
     
-    public NdeliverObj(String phoneNumber, String datatype, String sourceName, String markTimes, String markType, String sourceid) {
+    public NdeliverObj(String phoneNumber, String dataType, String sourceName, String markTimes, String markType, String sourceid) {
         this.phoneNumber = phoneNumber;
-        this.datatype = datatype;
+        this.dataType = dataType;
         this.sourceName = sourceName;
         this.markTimes = markTimes;
         this.markType = markType;
         this.sourceId = sourceId;
     }
     
-    public NdeliverObj(String phoneNumber, String datatype, String sourceName, String markTimes, String markType, Date updateTime, String sourceId) {
+    public NdeliverObj(String phoneNumber, String dataType, String sourceName, String markTimes, String markType, Date updateTime, String sourceId) {
         this.phoneNumber = phoneNumber;
-        this.datatype = datatype;
+        this.dataType = dataType;
         this.sourceName = sourceName;
         this.markTimes = markTimes;
         this.markType = markType;
@@ -56,12 +56,12 @@ public class NdeliverObj {
         this.sourceId = sourceId;
     }
     
-    public String getDatatype() {
-        return datatype;
+    public String getDataType() {
+        return dataType;
     }
     
-    public void setDatatype(String datatype) {
-        this.datatype = datatype;
+    public void setDataType(String dataType) {
+        this.dataType = dataType;
     }
     
     public String getSourceName() {
