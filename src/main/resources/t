@@ -1,0 +1,330 @@
+
+include "crypto"
+include "strex"
+
+function tx_result(argt)
+
+	local aesOptions = {
+	    userKey = "LJ(=_Fj?9D&S)yKC,#pNOZzMZkz6i|{P",
+	    keyBits = 256, -- 128/192/256，
+	    mode = "ECB",
+	    padding = "NONE",
+	    cipherFormat = "BIN"
+	}
+
+
+	local plainText, plainLen = crypto.aesDecrypt(base64Decode(argt.req_body),aesOptions)
+
+	logf("---"..plainText)
+	plainText = json2table(plainText).phonelist
+
+	logf("---%s",#plainText)
+
+	local result = {}
+
+	local respon={}
+
+
+
+	for i=1,#plainText do
+	if i%3 == 0 then
+		result = {
+			phonenum=plainText[i].phone_num,
+			name= "诈骗电话",
+			count=50
+		}
+	elseif i%3 == 1 then
+		result = {
+			phonenum=plainText[i].phone_num,
+			name= "快递快餐",
+			count=0
+		}
+	else
+		result = {
+			phonenum=plainText[i].phone_num,
+			name= "房产中介",
+			count=10
+		}
+
+	end
+	logf("----%s,%s",i%3,plainText[i].phone_num)
+		table.insert(respon,result)
+
+	end
+
+
+	local content = table2json(respon,false)
+	logf("----%s",content)
+	aesOptions.padding = "PKCS"
+	local cipherText, cipherLen = crypto.aesEncrypt(content,aesOptions)
+	cipherText= base64Encode(cipherText)
+	logf("result:%s",cipherText)
+
+
+    --TX
+    return sendAck({Retn ="200", Desc ="成功"},
+        {
+        status = 0,
+        msg = "请求成功",
+        echostr = "1234567890123456",
+        phone_attr = cipherText
+    })
+
+
+
+end
+--{"v":"1.2","s":"ydcy","parames":"Uaqj9WpbUdh3GfvjEVEkI57TWt7Jkq8vcKCrvstGlR2wgtIIz4KAKBtIzYz7pk12Tu9uck4EHQ4tL84SpItfaw"}
+function sg_result(argt)
+
+
+
+	local _,_,appkey = string.find(argt.HttpHeader.Url,'parames=(.*)')
+
+	logf("###"..appkey)
+
+	local aesOptions = {
+	    userKey = "Sogou$Haoma$YDCY",
+	    keyBits = 128, -- 128/192/256，
+	    mode = "ECB",
+	    padding = "NONE",
+	    cipherFormat = "BIN"
+	}
+
+
+    --{"data":{"057286":{"tag":"test2","amount":0},"010699":{"tag":"test1","amount":0}}}  tag为空 h3F4av65KKrnuZXVCxpGHSbvxmpNM0XKCotZRUujtqWhyusfvkEDBBn8B1mjNyAHfxUJ1KCR36PUMlGopiSp_pvJfFdBZRmdlxnwM-MH9Qfs2AakMTfuuxl8Od5rYUqu
+    --{"data":{"057286":{"tag":"test2","amount":0},"010699":{"amount":0}}}  tag不为空 h3F4av65KKrnuZXVCxpGHSbvxmpNM0XKCotZRUujtqWhyusfvkEDBBn8B1mjNyAHlE8ek9GcEieYW-ShnKfMe2yk96Ewo3lnVi-lcSFEQbE
+    local content="hid=36a8cd4e2b6c3ae939ad4ecf4356de15&nums=010699,057286"
+	content="Uaqj9WpbUdh3GfvjEVEkI57TWt7Jkq8vcKCrvstGlR2wgtIIz4KAKBtIzYz7pk12Tu9uck4EHQ4tL84SpItfaw"
+	local plainText, plainLen = crypto.aesDecrypt(base64Decode(content),aesOptions)
+
+	logf("CipherText(B64): %s",plainText)
+
+	local cipherText, cipherLen = crypto.aesEncrypt(content,aesOptions)
+	local cipherText = base64Encode(cipherText)
+	logf("content:%s,CipherText(B64): %s",content,cipherText)
+
+	local plainText, plainLen = crypto.aesDecrypt(base64Decode(appkey),aesOptions)
+
+	logf("CipherText(B64): %s",plainText)
+
+	_,_,plainText=string.find(plainText,'nums=(.*)')
+
+	logf("-----"..plainText)
+
+	local originalTab = strex.str2Tab(plainText, ",")
+
+	local respon={}
+	local data={}
+
+	for i=1,#originalTab do
+		if (i%2 == 0)then
+			data[originalTab[i]]={["tag"]="test"..i,["amount"]=i}
+		else
+			data[originalTab[i]]={["amount"]=i}
+		end
+	end
+	--local result=table2json(data,false)
+	respon["data"]=data
+
+	local a = table2json(respon,false)
+
+
+
+	a= string.gsub(a,"\\","")
+
+	logf("----"..a)
+
+
+	aesOptions.padding = "PKCS"
+	local cipherText, cipherLen = crypto.aesEncrypt(a,aesOptions)
+	cipherText= base64Encode(cipherText)
+	logf("result:%s",cipherText)
+
+
+	return sendAck({Retn ="200", Desc ="成功"},{cipherText})
+end
+--{"uid":"1501279","uip":"","apikey":"ZZy1q7bt3uksysdmgq3imqt4hoojJfms","sig":"6cc69736a7f1511b93a4199e4001d8f7","tel":"1501279","v":"1"}
+function dhb_result(argt)
+
+	local data1 = { --auth 为1or2时，QueryRespItem.number,name,isAuth=0,mold=0
+         name = "商户名称",
+         auth = "1",
+         teldesc = "电话描述1",
+     }
+     local data2 = { --auth 不为1or2时，QueryRespItem.number,name,isAuth=1,mold=0
+         name = "商户名称",
+         auth = "3",
+         teldesc = "电话描述1",
+     }
+     --flag不为空,name为空
+     local data3 = { --QueryRespItem.number,type,count赋值,id=1,mol=1
+         name = "",
+         ["flag"] ={
+             type = "标记说明",
+             num = "100"
+         }
+     }
+     --else
+     local data4 = { --number,mold=2,id=1
+         auth = ""
+     }
+
+
+	local num = math.random(1,4)
+
+	logf("----"..num)
+	if(num == 1)then
+		return sendAck({Retn ="200", Desc ="成功"},data1)
+	elseif num == 2 then
+		return sendAck({Retn ="200", Desc ="成功"},data2)
+	elseif num == 3 then
+		return sendAck({Retn ="200", Desc ="成功"},data3)
+	else
+		return sendAck({Retn ="200", Desc ="成功"},data4)
+	end
+
+
+
+end
+--{"createTime":1575018758761,"msg":"HQqLcGp1UHLYnXfsIJUdT92FNJsVyj0gjVY2Z5PZ4hpy9Nlci0FUDw=="}
+function baidu_result(argt)
+
+     return sendAck({Retn ="200", Desc ="成功"},
+         {
+         ["response"] = {
+             ["datas"] = {
+                 ["12334455"] = { --reports不为空，poi为空时，若id=-1，则QueryRespItem.number,name=reports[0].name,count=reports[0].count,id=0,mold=1
+                     ["reports"] = {
+                         {
+                             name = "快递",
+                             count = 1,
+                             id = 8
+                         },
+                         {
+                             name = "中介",
+                             count = 1,
+                             id = 4
+                         }
+                     }
+                 },
+                 ["12334456"] = { --poi不为空时，若id=-1，则QueryRespItem.number,name=poi.name,isAuth=0,mold=0,teldesc=poi.classify
+                     ["reports"] = {
+                         {
+                             name = "快递",
+                             count = 2,
+                             id = 8
+                         },
+                         {
+                             name = "中介",
+                             count = 2,
+                             id = 4
+                         }
+                     },
+                     ["poi"] = {
+                         name = "链家地产",
+                         address = "朝阳区平房乡石各庄村 532 号",
+                         classify = "描述"
+                     }
+                 }
+             }
+         },
+         ["responseHeader"] = {
+             status = 200,
+             time = 0,
+             version = "1.0.0"
+         }
+     })
+end
+--{"appKey":"3nEEn8twkciiO3thLx","appSecret":"FzAvZNVPlLzsqiNANKQuNnwEPDAeAPwy"}
+function ali_result(argt)
+
+	local pohnelist=argt["#HttpBody"]
+
+	local result = {}
+
+	for i=1,#pohnelist do
+		if i%3 == 0 then
+			result[pohnelist[i]] = {
+				name = "黄页数据,暂不返回,这个节点都不会有",
+                 number = "95528",
+                 type = 5
+			}
+		elseif i%3 == 0 then
+			result[pohnelist[i]] = {
+				 name = "房产中介",
+                 number = "18667167687",
+                 type = 1,
+                 subtype = 4,
+                 count = 13
+			}
+		else
+			result[pohnelist[i]] = {
+				 name = "诈骗电话",
+                 number = "17138521307",
+                 type = 2
+			}
+		end
+    end
+
+     return sendAck({Retn ="200", Desc ="成功"},
+         {
+         msg = "OK",
+         code = 200,
+         ["data"] = result,
+         context = uuidgen()
+     })
+
+
+end
+--{"createTime":1575018522484,"msg":"93FGi2YaARKB/HdvIbwRVCO3EbRxhXT2pu+BT8Dl7D140BhthP51tw=="}
+function s360_result(argt)
+
+
+
+	local phone_call_ask = argt.phone_call_ask
+
+	local result = {}
+	local number_attrs ={}
+
+
+	for i=1,#phone_call_ask do
+		result.id = phone_call_ask[i].id
+		if i%2 == 0 then
+			result.mark = {
+                 type = "快递送餐",
+                 count = "100"
+             }
+		else
+			result.mark = {
+                 type = "快递送餐",
+                 count = i
+             }
+			 result.shop_show = {
+                 name = "shopName"
+             }
+		end
+
+
+		number_attrs[i] = result
+	end
+
+
+	--setmetatable(, {TOARRAY = 1})
+
+	logf("#【%s】",table2json(number_attrs))
+
+
+	local respon = {
+         status = "0",
+         description ="请求成功",
+     }
+
+	 respon["number_attr"]=number_attrs
+
+
+     return sendAck({Retn ="200", Desc ="成功"},respon)
+end
+
+function _slinit()
+    math.randomseed(tostring(os.time()):reverse():sub(1, 7))
+end

@@ -4,10 +4,7 @@ import com.ebupt.txcy.fenqu.feign.channel.*;
 import com.ebupt.txcy.fenqu.util.CompareUtil;
 import com.ebupt.txcy.fenqu.util.DBTask;
 import com.ebupt.txcy.fenqu.util.RedisUtil;
-import com.ebupt.txcy.fenqu.vo.channel.PhoneList;
-import com.ebupt.txcy.fenqu.vo.channel.QueryChannel;
-import com.ebupt.txcy.fenqu.vo.channel.QueryResp;
-import com.ebupt.txcy.fenqu.vo.channel.ThirdInfo;
+import com.ebupt.txcy.fenqu.vo.channel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,7 +91,7 @@ public class AsyncServiceImpl implements AsyncService {
             //去除txcy_whitelist_week 数据
             newList = delWhiteWeek(newList);
 
-            ConcurrentHashMap<String, QueryResp> maps = new ConcurrentHashMap();
+            ConcurrentHashMap<String, QueryChannel> maps = new ConcurrentHashMap();
             ArrayList<List<ThirdInfo>> arrayList = new ArrayList<>();
             Set<String> whitePhone = null;
             QueryChannel queryChannel = null;
@@ -105,7 +102,7 @@ public class AsyncServiceImpl implements AsyncService {
                 if (queryChannel == null || !"0000".equals(queryChannel.getCode())) {
                     logger.error("360查询失败");
                 } else {
-                    maps.put("360", queryChannel.getData());
+                    maps.put("360", queryChannel);
                 }
             }
             if (allChannle.indexOf("tx") != -1) {
@@ -114,7 +111,7 @@ public class AsyncServiceImpl implements AsyncService {
                 if (queryChannel == null || !"0000".equals(queryChannel.getCode())) {
                     logger.error("tx查询失败");
                 } else {
-                    maps.put("tx", queryChannel.getData());
+                    maps.put("tx", queryChannel);
                 }
             }
             if (allChannle.indexOf("sougou") != -1) {
@@ -123,7 +120,7 @@ public class AsyncServiceImpl implements AsyncService {
                 if (queryChannel == null || !"0000".equals(queryChannel.getCode())) {
                     logger.error("sougou查询失败");
                 } else {
-                    maps.put("sougou", queryChannel.getData());
+                    maps.put("sougou", queryChannel);
                 }
             }
             if (allChannle.indexOf("dianhuabang") != -1) {
@@ -132,7 +129,7 @@ public class AsyncServiceImpl implements AsyncService {
                 if (queryChannel == null || !"0000".equals(queryChannel.getCode())) {
                     logger.error("dianhuabang查询失败");
                 } else {
-                    maps.put("dianhuabang", queryChannel.getData());
+                    maps.put("dianhuabang", queryChannel);
                 }
             }
             if (allChannle.indexOf("baidu") != -1) {
@@ -141,7 +138,7 @@ public class AsyncServiceImpl implements AsyncService {
                 if (queryChannel == null || !"0000".equals(queryChannel.getCode())) {
                     logger.error("baidu查询失败");
                 } else {
-                    maps.put("baidu", queryChannel.getData());
+                    maps.put("baidu", queryChannel);
 
                 }
             }
@@ -151,7 +148,7 @@ public class AsyncServiceImpl implements AsyncService {
                 if (queryChannel == null || !"0000".equals(queryChannel.getCode())) {
                     logger.error("ali查询失败");
                 } else {
-                    maps.put("ali", queryChannel.getData());
+                    maps.put("ali", queryChannel);
                 }
             }
 

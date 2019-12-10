@@ -4,6 +4,8 @@ import com.ebupt.txcy.fenqu.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -40,10 +42,15 @@ public class RedisTest {
 //        System.out.println(sdf.format(new Date()));
 //        System.out.println(list.size());
     
-        Set set = new HashSet();
-        set.add("12");
-        System.out.println(set.contains("123"));
+        System.out.println( longToBytes(1575625952258l).toString());
 
+    }
+    
+    public static byte[] longToBytes(long v) {
+        ByteBuffer byteBuffer = ByteBuffer.allocate(8);
+        byteBuffer.order(ByteOrder.BIG_ENDIAN);
+        byteBuffer.putLong(v);
+        return byteBuffer.array();
     }
 }
 

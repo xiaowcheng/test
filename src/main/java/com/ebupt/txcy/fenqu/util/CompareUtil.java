@@ -3,6 +3,7 @@ package com.ebupt.txcy.fenqu.util;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.ebupt.txcy.fenqu.vo.channel.QueryChannel;
 import com.ebupt.txcy.fenqu.vo.channel.QueryResp;
 import com.ebupt.txcy.fenqu.vo.channel.QueryRespItem;
 import com.ebupt.txcy.fenqu.vo.channel.ThirdInfo;
@@ -224,11 +225,11 @@ public class CompareUtil {
     }
   }
   
-  public void dealInfo(ConcurrentHashMap<String, QueryResp> maps)
+  public void dealInfo(ConcurrentHashMap<String, QueryChannel> maps)
   {
   
-    Collection<QueryResp> values = maps.values();
-    Iterator<QueryResp> iterator = values.iterator();
+    Collection<QueryChannel> values = maps.values();
+    Iterator<QueryChannel> iterator = values.iterator();
     
     this.yellowMap = new ConcurrentHashMap();
     ArrayList<YellowInfo> array1 = new ArrayList();
@@ -247,9 +248,9 @@ public class CompareUtil {
     {
       
       try{
-        QueryResp queryResp = iterator.next();
+        QueryChannel queryResp = iterator.next();
         this.logger.info("list length is {}", maps.values().size());
-        for (QueryRespItem queryRespItem: queryResp.getItems())
+        for (QueryRespItem queryRespItem: queryResp.getData())
         {
           dealInfoandWhite(queryRespItem,queryResp.getName());
         }
