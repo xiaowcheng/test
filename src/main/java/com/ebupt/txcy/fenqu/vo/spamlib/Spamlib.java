@@ -14,7 +14,7 @@ public class Spamlib {
     
     private Integer Id;
     
-    private Date update;
+    private Date updateTime;
     
     public Spamlib() {
     }
@@ -27,13 +27,13 @@ public class Spamlib {
         Id = id;
     }
     
-    public Spamlib(String phoneNumber, Integer sourceId, String markType, Integer markTimes, Integer id, Date update) {
+    public Spamlib(String phoneNumber, Integer sourceId, String markType, Integer markTimes, Integer id, Date updateTime) {
         this.phoneNumber = phoneNumber;
         this.sourceId = sourceId;
         this.markType = markType;
         this.markTimes = markTimes;
         Id = id;
-        this.update = update;
+        this.updateTime = updateTime;
     }
     
     public String getPhoneNumber() {
@@ -76,11 +76,11 @@ public class Spamlib {
         Id = id;
     }
     
-    public Date getUpdate() {
-        return update;
+    public Date getUpdateTime() {
+        return updateTime;
     }
     
-    public void setUpdate(Date update) {
-        this.update = update;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

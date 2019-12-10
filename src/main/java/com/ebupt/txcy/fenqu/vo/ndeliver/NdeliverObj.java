@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class NdeliverObj {
     
-    private String phonenumer;
+    private String phoneNumber;
     
     private String datatype;
     
@@ -16,36 +16,44 @@ public class NdeliverObj {
     
     private Date updateTime;
     
-    private String sourceid;
+    private String sourceId;
     
     public NdeliverObj() {
     }
     
-    public NdeliverObj(String phonenumer, String datatype, String sourceName, String markTimes, String markType, String sourceid) {
-        this.phonenumer = phonenumer;
+    public NdeliverObj(String phoneNumber, String datatype, String sourceName, String markTimes, String markType, String sourceid) {
+        this.phoneNumber = phoneNumber;
         this.datatype = datatype;
         this.sourceName = sourceName;
         this.markTimes = markTimes;
         this.markType = markType;
-        this.sourceid = sourceid;
+        this.sourceId = sourceId;
     }
     
-    public NdeliverObj(String phonenumer, String datatype, String sourceName, String markTimes, String markType, Date updateTime, String sourceid) {
-        this.phonenumer = phonenumer;
+    public NdeliverObj(String phoneNumber, String datatype, String sourceName, String markTimes, String markType, Date updateTime, String sourceId) {
+        this.phoneNumber = phoneNumber;
         this.datatype = datatype;
         this.sourceName = sourceName;
         this.markTimes = markTimes;
         this.markType = markType;
         this.updateTime = updateTime;
-        this.sourceid = sourceid;
+        this.sourceId = sourceId;
     }
     
-    public String getPhonenumer() {
-        return phonenumer;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
     
-    public void setPhonenumer(String phonenumer) {
-        this.phonenumer = phonenumer;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+    
+    public String getSourceId() {
+        return sourceId;
+    }
+    
+    public void setSourceId(String sourceId) {
+        this.sourceId = sourceId;
     }
     
     public String getDatatype() {
@@ -86,13 +94,5 @@ public class NdeliverObj {
     
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-    
-    public String getSourceid() {
-        return sourceid;
-    }
-    
-    public void setSourceid(String sourceid) {
-        this.sourceid = sourceid;
     }
 }

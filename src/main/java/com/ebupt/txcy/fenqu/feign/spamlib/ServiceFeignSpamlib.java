@@ -15,13 +15,13 @@ public interface ServiceFeignSpamlib {
     
     public static final Logger logger = LoggerFactory.getLogger(ServiceFeignSpamlib.class);
     
-    @PostMapping(value ="/txcy/yellowpagelib/v1/addNumber")
+    @PostMapping(value ="/txcy/spamlib/v1/addNumber")
     Response addSpamlibList(@RequestBody PhoneList phoneList);
     
-    @PostMapping(value ="/txcy/yellowpagelib/v1/delNumber")
+    @PostMapping(value ="/txcy/spamlib/v1/delNumber")
     Response delSpamlibList(@RequestBody PhoneList phoneList);
     
-    @PostMapping(value ="/txcy/yellowpagelib/v1/updateNumber")
+    @PostMapping(value ="/txcy/spamlib/v1/updateNumber")
     Response updateSpamlibList(@RequestBody PhoneList phoneList);
     
     @Component

@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class YellowpagelibObj {
     
-    private String phonenumber;
+    private String phoneNumber;
     
     private String classAtype;
     
@@ -19,16 +19,16 @@ public class YellowpagelibObj {
     public YellowpagelibObj() {
     }
     
-    public YellowpagelibObj(String phonenumber, String classAtype, String profession, String classBtype, String sourceId) {
-        this.phonenumber = phonenumber;
+    public YellowpagelibObj(String phoneNumber, String classAtype, String profession, String classBtype, String sourceId) {
+        this.phoneNumber = phoneNumber;
         this.classAtype = classAtype;
         this.profession = profession;
         this.classBtype = classBtype;
         this.sourceId = sourceId;
     }
     
-    public YellowpagelibObj(String phonenumber, String classAtype, String profession, String classBtype, String sourceId, Date createTime) {
-        this.phonenumber = phonenumber;
+    public YellowpagelibObj(String phoneNumber, String classAtype, String profession, String classBtype, String sourceId, Date createTime) {
+        this.phoneNumber = phoneNumber;
         this.classAtype = classAtype;
         this.profession = profession;
         this.classBtype = classBtype;
@@ -36,12 +36,12 @@ public class YellowpagelibObj {
         this.createTime = createTime;
     }
     
-    public String getPhonenumber() {
-        return phonenumber;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
     
-    public void setPhonenumber(String phonenumber) {
-        this.phonenumber = phonenumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
     
     public String getClassAtype() {
