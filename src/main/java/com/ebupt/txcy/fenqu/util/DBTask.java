@@ -146,9 +146,17 @@ public class DBTask
       }
       addPhone.setPhoneList(addList);
       delPhone.setPhoneList(delList);
-      
-      serviceFeignYellow.addYellowList(addPhone);
-      serviceFeignYellow.delYellowList(delPhone);
+  
+      if(addPhone.getPhoneList().size() > 0 ){
+        serviceFeignYellow.addYellowList(addPhone);
+      }else{
+        logger.info("YellowList 没有新增数据");
+      }
+      if(delPhone.getPhoneList().size() > 0 ){
+        serviceFeignYellow.delYellowList(delPhone);
+      }else{
+        logger.info("YellowList 没有删除数据");
+      }
     }
     catch (Exception e)
     {
@@ -177,8 +185,18 @@ public class DBTask
       addPhone.setPhoneList(addList);
       delPhone.setPhoneList(delList);
       
-      serviceFeignYellowbak.addYellowbakList(addPhone);
-      serviceFeignYellowbak.delYellowbakList(delPhone);
+      if(addPhone.getPhoneList().size() > 0 ){
+        serviceFeignYellowbak.addYellowbakList(addPhone);
+      }else{
+        logger.info("YellowbakList 没有新增数据");
+      }
+      if(delPhone.getPhoneList().size() > 0 ){
+        serviceFeignYellowbak.delYellowbakList(delPhone);
+      }else{
+        logger.info("YellowbakList 没有删除数据");
+      }
+      
+      
     }
     catch (Exception e)
     {
@@ -217,9 +235,18 @@ public class DBTask
       com.ebupt.txcy.fenqu.vo.ndeliver.PhoneList deliver = new com.ebupt.txcy.fenqu.vo.ndeliver.PhoneList(deliverList);
       com.ebupt.txcy.fenqu.vo.spamlib.PhoneList spamlib = new com.ebupt.txcy.fenqu.vo.spamlib.PhoneList(spamlibList);
   
-      serviceFeignDeliver.addDeliverList(deliver);
-      serviceFeignSpamlib.addSpamlibList(spamlib);
-
+  
+      if(deliver.getPhoneList().size() > 0 ){
+        serviceFeignDeliver.addDeliverList(deliver);
+      }else{
+        logger.info("DeliverList 没有新增数据");
+      }
+      if(spamlib.getPhoneList().size() > 0 ){
+        serviceFeignSpamlib.addSpamlibList(spamlib);
+      }else{
+        logger.info("SpamlibList 没有新增数据");
+      }
+      
     }
     catch (Exception e)
     {

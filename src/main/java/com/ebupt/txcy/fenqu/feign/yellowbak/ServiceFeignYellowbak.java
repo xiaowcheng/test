@@ -15,13 +15,13 @@ public interface ServiceFeignYellowbak {
     
     public static final Logger logger = LoggerFactory.getLogger(ServiceFeignYellowbak.class);
     
-    @PostMapping(value ="/txcy/yellowpagelib/v1/addNumber")
+    @PostMapping(value ="/txcy/yellowpagelibbak/v1/addNumber")
     Response addYellowbakList(@RequestBody PhoneList phoneList);
     
-    @PostMapping(value ="/txcy/yellowpagelib/v1/delNumber")
+    @PostMapping(value ="/txcy/yellowpagelibbak/v1/delNumber")
     Response delYellowbakList(@RequestBody PhoneList phoneList);
     
-    @PostMapping(value ="/txcy/yellowpagelib/v1/updateNumber")
+    @PostMapping(value ="/txcy/yellowpagelibbak/v1/updateNumber")
     Response updateYellowbakList(@RequestBody PhoneList phoneList);
     
     @Component

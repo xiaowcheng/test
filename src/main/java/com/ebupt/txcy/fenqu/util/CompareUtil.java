@@ -249,7 +249,7 @@ public class CompareUtil {
       
       try{
         QueryChannel queryResp = iterator.next();
-        this.logger.info("list length is {}", maps.values().size());
+        this.logger.info("list length is {}", queryResp.getData().size());
         for (QueryRespItem queryRespItem: queryResp.getData())
         {
           dealInfoandWhite(queryRespItem,queryResp.getName());
