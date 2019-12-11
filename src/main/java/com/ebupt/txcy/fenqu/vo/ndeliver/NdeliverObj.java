@@ -18,19 +18,22 @@ public class NdeliverObj {
     
     private String sourceId;
     
+    private String id;
+    
     public NdeliverObj() {
     }
     
-    public NdeliverObj(String phoneNumber, String dataType, String sourceName, String markTimes, String markType, String sourceid) {
+    public NdeliverObj(String phoneNumber, String dataType, String sourceName, String markTimes, String markType, String sourceId,String id) {
         this.phoneNumber = phoneNumber;
         this.dataType = dataType;
         this.sourceName = sourceName;
         this.markTimes = markTimes;
         this.markType = markType;
         this.sourceId = sourceId;
+        this.id = id;
     }
     
-    public NdeliverObj(String phoneNumber, String dataType, String sourceName, String markTimes, String markType, Date updateTime, String sourceId) {
+    public NdeliverObj(String phoneNumber, String dataType, String sourceName, String markTimes, String markType, Date updateTime, String sourceId,String id) {
         this.phoneNumber = phoneNumber;
         this.dataType = dataType;
         this.sourceName = sourceName;
@@ -38,6 +41,15 @@ public class NdeliverObj {
         this.markType = markType;
         this.updateTime = updateTime;
         this.sourceId = sourceId;
+        this.id = id;
+    }
+    
+    public String getId() {
+        return id;
+    }
+    
+    public void setId(String id) {
+        this.id = id;
     }
     
     public String getPhoneNumber() {

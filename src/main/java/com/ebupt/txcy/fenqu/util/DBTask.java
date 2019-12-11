@@ -225,7 +225,7 @@ public class DBTask
           String type = typeUtil.dealNewType(info.getType());
           if (i == 0) {
             //插入ndeliver
-            deliverList.add(new NdeliverObj(getNewPhone(info.getPhone()),"","",info.getCount()+"",type,info.getSourceID()+""));
+            deliverList.add(new NdeliverObj(getNewPhone(info.getPhone()),"","",info.getCount()+"",type,info.getSourceID()+"",info.getId()+""));
           }
           //插入spmlib表
           spamlibList.add(new Spamlib(getNewPhone(info.getPhone()),(int)info.getSourceID(),type,info.getCount(),info.getId()));
