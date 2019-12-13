@@ -148,11 +148,13 @@ public class DBTask
       delPhone.setPhoneList(delList);
   
       if(addPhone.getPhoneList().size() > 0 ){
+        logger.info("YellowList新增数据："+addPhone.getPhoneList().size());
         serviceFeignYellow.addYellowList(addPhone);
       }else{
         logger.info("YellowList 没有新增数据");
       }
       if(delPhone.getPhoneList().size() > 0 ){
+        logger.info("YellowList删除数据："+addPhone.getPhoneList().size());
         serviceFeignYellow.delYellowList(delPhone);
       }else{
         logger.info("YellowList 没有删除数据");
@@ -186,11 +188,13 @@ public class DBTask
       delPhone.setPhoneList(delList);
       
       if(addPhone.getPhoneList().size() > 0 ){
+        logger.info("YellowbakList 新增数据："+addPhone.getPhoneList().size());
         serviceFeignYellowbak.addYellowbakList(addPhone);
       }else{
         logger.info("YellowbakList 没有新增数据");
       }
       if(delPhone.getPhoneList().size() > 0 ){
+        logger.info("YellowbakList 删除数据："+delPhone.getPhoneList().size());
         serviceFeignYellowbak.delYellowbakList(delPhone);
       }else{
         logger.info("YellowbakList 没有删除数据");
@@ -237,11 +241,13 @@ public class DBTask
   
   
       if(deliver.getPhoneList().size() > 0 ){
+        logger.info("DeliverList 新增数据："+deliver.getPhoneList().size());
         serviceFeignDeliver.addDeliverList(deliver);
       }else{
         logger.info("DeliverList 没有新增数据");
       }
       if(spamlib.getPhoneList().size() > 0 ){
+        logger.info("SpamlibList 新增数据："+spamlib.getPhoneList().size());
         serviceFeignSpamlib.addSpamlibList(spamlib);
       }else{
         logger.info("SpamlibList 没有新增数据");
@@ -261,6 +267,7 @@ public class DBTask
 
     try
     {
+      logger.info("white_week新增数据："+whitePhone.size());
       whitePhoneWeekService.saveRedisAll(whitePhone);
     }
     catch (Exception e)

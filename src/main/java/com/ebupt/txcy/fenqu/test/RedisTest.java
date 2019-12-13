@@ -42,8 +42,12 @@ public class RedisTest {
 //        System.out.println(sdf.format(new Date()));
 //        System.out.println(list.size());
     
-        System.out.println( longToBytes(1575625952258l).toString());
-
+//        System.out.println( longToBytes(1575625952258l).toString());
+        byte[] a = longToBytes(1575625952258l);
+        for (byte c:
+             a) {
+            System.out.println(c);
+        }
     }
     
     public static byte[] longToBytes(long v) {
