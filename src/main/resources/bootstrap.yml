@@ -3,7 +3,7 @@
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://10.1.60.109:30010/eureka/
+      defaultZone: http://10.1.60.110:30010/eureka/
   instance:
     prefer-ip-address: true
 spring:
