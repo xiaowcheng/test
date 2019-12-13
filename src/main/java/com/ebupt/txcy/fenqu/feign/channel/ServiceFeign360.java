@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient( value = "${service-360}",configuration = FeignConfiguration.class,fallback = QueryChannelClientFallback.class)
+@FeignClient( value = "${service-360}",fallback = QueryChannelClientFallback.class)
 public interface ServiceFeign360 {
     
     @PostMapping(value ="/txcy/thirdinquiry360/v1/search360")
