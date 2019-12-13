@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient( value = "${service-baidu}",configuration = FeignConfiguration.class,fallback = QueryChannelClientFallback.class)
+@FeignClient( value = "${service-baidu}",fallback = QueryChannelClientFallback.class)
 public interface ServiceFeignBaidu {
     @PostMapping(value ="/txcy/thirdinquirybaidu/v1/searchbaidu")
     QueryChannel consumer(@RequestBody PhoneList phoneList);

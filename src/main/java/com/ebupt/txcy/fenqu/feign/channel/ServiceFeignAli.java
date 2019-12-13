@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient( value = "${service-ali}",configuration = FeignConfiguration.class,fallback = QueryChannelClientFallback.class)
+@FeignClient( value = "${service-ali}",fallback = QueryChannelClientFallback.class)
 public interface ServiceFeignAli {
     
     @PostMapping(value ="/txcy/thirdinquiryali/v1/searchali")
