@@ -54,11 +54,10 @@ public class DBTask
   
   
   @Async("asyncServiceExecutor")
-  public void run(Set<String> whitePhone, ArrayList<List<ThirdInfo>> arrayList, ConcurrentHashMap<Integer, ArrayList<YellowInfo>> yellowMap)
+  public void run( ArrayList<List<ThirdInfo>> arrayList, ConcurrentHashMap<Integer, ArrayList<YellowInfo>> yellowMap)
   {
     try
     {
-      writeWhite(whitePhone);
       writeDeliverInfo(arrayList);
       writeYellowInfo(yellowMap);
     }

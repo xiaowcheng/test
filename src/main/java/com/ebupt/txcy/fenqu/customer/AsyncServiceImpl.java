@@ -97,7 +97,7 @@ public class AsyncServiceImpl implements AsyncService {
 
             ConcurrentHashMap<String, QueryChannel> maps = new ConcurrentHashMap();
             ArrayList<List<ThirdInfo>> arrayList = new ArrayList<>();
-            List<String> whitePhone = null;
+            Set<String> whitePhone = null;
             QueryChannel queryChannel = null;
 
             if (allChannle.indexOf("360") != -1) {
@@ -165,15 +165,20 @@ public class AsyncServiceImpl implements AsyncService {
             arrayList = compareUtil.getThirdArrayList();
             whitePhone = compareUtil.getWhitephoneList();
             Object yellowMap = compareUtil.getYellowMap();
+            
+            if (whitePhone != null && whitePhone.size() >0){
+                dbTask.writeWhite(whitePhone);
     
-            //去除txcy_whitelist_week 数据
-            whitePhone = delWhiteWeek( whitePhone);
-            if (newList.size() <=0) {
+                //去除txcy_whitelist_week 数据
+                arrayList = new ArrayList<>(delWhiteWeek( arrayList));
+            }
+            
+            if (arrayList == null || arrayList.size() <=0) {
                 logger.info("phonelist all in redis white_week");
                 return;
             }
             
-            dbTask.run(new HashSet<>(whitePhone), arrayList, (ConcurrentHashMap) yellowMap);
+            dbTask.run( arrayList, (ConcurrentHashMap) yellowMap);
 
         }catch(Exception e){
             e.printStackTrace();

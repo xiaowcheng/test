@@ -25,7 +25,7 @@ public class CompareUtil {
   public ConcurrentHashMap<Integer, ArrayList<YellowInfo>> yellowMap = null;
   public ConcurrentHashMap<String, List<ThirdInfo>> thirdMap = null;
   public ArrayList<List<ThirdInfo>> thirdarrayList = null;
-  public List<String> whitephoneList = null;
+  public Set<String> whitephoneList = null;
   public ConcurrentHashMap<String, Integer> whitephoneMap = null;
   
   public ConcurrentHashMap<Integer, ArrayList<YellowInfo>> getYellowMap()
@@ -38,7 +38,7 @@ public class CompareUtil {
     return this.thirdarrayList;
   }
   
-  public List<String> getWhitephoneList()
+  public Set<String> getWhitephoneList()
   {
     return this.whitephoneList;
   }
@@ -239,7 +239,7 @@ public class CompareUtil {
     this.thirdMap = new ConcurrentHashMap();
     this.whitephoneMap = new ConcurrentHashMap();
     this.thirdarrayList = new ArrayList();
-    this.whitephoneList = new ArrayList<>();
+    this.whitephoneList = new HashSet<>();
   
   
     List<QueryRespItem> msg = null;
