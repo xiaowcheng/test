@@ -31,10 +31,6 @@ public class DBTask
 {
   private final Logger logger = LoggerFactory.getLogger(DBTask.class);
   
-  private Set<String> whitePhone;
-  private ArrayList<List<ThirdInfo>> arrayList;
-  private ConcurrentHashMap<Integer, ArrayList<YellowInfo>> yellowMap;
-  
   @Resource
   ServiceFeignYellow serviceFeignYellow;
   
@@ -60,13 +56,11 @@ public class DBTask
   @Async("asyncServiceExecutor")
   public void run(Set<String> whitePhone, ArrayList<List<ThirdInfo>> arrayList, ConcurrentHashMap<Integer, ArrayList<YellowInfo>> yellowMap)
   {
-    this.whitePhone = whitePhone;
-    this.arrayList = arrayList;
-    this.yellowMap = yellowMap;
-    
     try
     {
-      inquiryDBInsert();
+      writeWhite(whitePhone);
+      writeDeliverInfo(arrayList);
+      writeYellowInfo(yellowMap);
     }
     catch (Exception e)
     {
@@ -77,12 +71,6 @@ public class DBTask
       this.logger.error("[Exception]", t);
     }
     this.logger.info("DBTask over---");
-  }
-  
-  public void inquiryDBInsert()
-  {
-    writeDeliverInfo(this.arrayList, this.whitePhone);
-    writeYellowInfo(this.yellowMap);
   }
   
   public String getNewPhone(String phone)
@@ -208,7 +196,7 @@ public class DBTask
     }
   }
   
-  public void writeDeliverInfo(ArrayList<List<ThirdInfo>> arrayList, Set<String> whitePhone) {
+  public void writeDeliverInfo(ArrayList<List<ThirdInfo>> arrayList) {
     if (arrayList == null) {
       return;
     }
@@ -258,13 +246,13 @@ public class DBTask
     {
       this.logger.error("[Exception]", e);
     }
-    
-   
+  }
+  public void writeWhite(Set whitePhone){
     if (whitePhone == null || whitePhone.size() <= 0) {
       logger.info("third rerun white_week data is null");
       return;
     }
-
+  
     try
     {
       logger.info("white_week新增数据："+whitePhone.size());
