@@ -93,7 +93,7 @@ public class FenquController{
         logger.info("records.size:"+String.valueOf(records.size()));
         List<String> phoneList = new ArrayList<>(MAX_POLL_RECORDS_CONFIG);
         for (ConsumerRecord<?, String> record : records){
-//            logger.info("批量监听------:"+record.value());
+            logger.info("批量监听------:"+record.value());
             phoneList.add(record.value());
             ack.acknowledge();//手动提交偏移量            
         }
