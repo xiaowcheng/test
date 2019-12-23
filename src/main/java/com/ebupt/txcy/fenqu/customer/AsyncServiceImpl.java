@@ -168,9 +168,11 @@ public class AsyncServiceImpl implements AsyncService {
             
             if (whitePhone != null && whitePhone.size() >0){
                 dbTask.writeWhite(whitePhone);
+                
+                
     
                 //去除txcy_whitelist_week 数据
-                arrayList = new ArrayList<>(delWhiteWeek( arrayList));
+                //arrayList = new ArrayList<>(delWhiteWeek( arrayList));
             }
             
             if (arrayList == null || arrayList.size() <=0) {
