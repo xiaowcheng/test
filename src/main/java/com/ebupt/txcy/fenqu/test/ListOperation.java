@@ -84,7 +84,7 @@ public class ListOperation {
         
     
 //        System.out.println("====2-1求差集===");
-//        list=list2.stream().filter(t-> !list1.contains(t)).collect(Collectors.toList());
+//        list=list2.stream().filter(a-> !list1.contains(a)).collect(Collectors.toList());
 //        list.stream().forEach(System.out::println);
 
     }

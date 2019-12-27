@@ -13,6 +13,7 @@ public class QueryChannel {
     private int name;
     
     public QueryChannel(String code, String msg, List<QueryRespItem> data, int name) {
+        System.out.println("----------"+code);
         this.code = code;
         this.msg = msg;
         this.data = data;

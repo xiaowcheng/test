@@ -13,38 +13,30 @@ import javax.crypto.spec.SecretKeySpec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EncryptUtil
-{
+public class EncryptUtil {
   private static final Logger logger = LoggerFactory.getLogger(EncryptUtil.class);
   
-  public static String md5encrypt(String inputText)
-  {
+  public static String md5encrypt(String inputText) {
     if ((inputText == null) || ("".equals(inputText.trim()))) {
       throw new IllegalArgumentException("Please input encrypt text");
     }
     String encryptText = null;
-    try
-    {
+    try {
       MessageDigest m = MessageDigest.getInstance("md5");
       m.update(inputText.getBytes("utf-8"));
       byte[] s = m.digest();
-      
-
+  
+  
       return hex(s);
-    }
-    catch (NoSuchAlgorithmException e)
-    {
+    } catch (NoSuchAlgorithmException e) {
       logger.error("Error:", e);
-    }
-    catch (UnsupportedEncodingException e)
-    {
+    } catch (UnsupportedEncodingException e) {
       logger.error("Error:", e);
     }
     return encryptText;
   }
   
-  private static String hex(byte[] arr)
-  {
+  private static String hex(byte[] arr) {
     StringBuffer sb = new StringBuffer();
     for (int i = 0; i < arr.length; i++) {
       sb.append(Integer.toHexString(arr[i] & 0xFF | 0x100).substring(1, 3));
@@ -52,10 +44,8 @@ public class EncryptUtil
     return sb.toString();
   }
   
-  public static byte[] AESencrypt(String content, String password)
-  {
-    try
-    {
+  public static byte[] AESencrypt(String content, String password) {
+    try {
       byte[] enCodeFormat = password.getBytes("utf-8");
       SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
       
@@ -68,38 +58,24 @@ public class EncryptUtil
       byte[] byteContent = content.getBytes("utf-8");
       
       return cipher.doFinal(byteContent);
-    }
-    catch (NoSuchAlgorithmException e)
-    {
+    } catch (NoSuchAlgorithmException e) {
       logger.error("Error:", e);
-    }
-    catch (NoSuchPaddingException e)
-    {
+    } catch (NoSuchPaddingException e) {
       logger.error("Error:", e);
-    }
-    catch (InvalidKeyException e)
-    {
+    } catch (InvalidKeyException e) {
       logger.error("Error:", e);
-    }
-    catch (UnsupportedEncodingException e)
-    {
+    } catch (UnsupportedEncodingException e) {
       logger.error("Error:", e);
-    }
-    catch (IllegalBlockSizeException e)
-    {
+    } catch (IllegalBlockSizeException e) {
       logger.error("Error:", e);
-    }
-    catch (BadPaddingException e)
-    {
+    } catch (BadPaddingException e) {
       logger.error("Error:", e);
     }
     return null;
   }
   
-  public static byte[] AESdecrypt(byte[] content, String password)
-  {
-    try
-    {
+  public static byte[] AESdecrypt(byte[] content, String password) {
+    try {
       byte[] enCodeFormat = password.getBytes("UTF-8");
       SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
       
@@ -108,58 +84,43 @@ public class EncryptUtil
       logger.debug("length before AES1:" + content.length);
       
       return cipher.doFinal(content);
-    }
-    catch (NoSuchAlgorithmException e)
-    {
+    } catch (NoSuchAlgorithmException e) {
       logger.error("Error:", e);
-    }
-    catch (NoSuchPaddingException e)
-    {
+    } catch (NoSuchPaddingException e) {
       logger.error("Error:", e);
-    }
-    catch (InvalidKeyException e)
-    {
+    } catch (InvalidKeyException e) {
       logger.error("Error:", e);
-    }
-    catch (IllegalBlockSizeException e)
-    {
+    } catch (IllegalBlockSizeException e) {
       logger.error("Error:", e);
-    }
-    catch (BadPaddingException e)
-    {
+    } catch (BadPaddingException e) {
       logger.error("Error:", e);
-    }
-    catch (UnsupportedEncodingException e)
-    {
+    } catch (UnsupportedEncodingException e) {
       logger.error("Error:", e);
     }
     return null;
   }
   
-  private static String h(byte[] arr)
-  {
-    char[] hexDigits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+  private static String h(byte[] arr) {
+    char[] hexDigits = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
     int j = arr.length;
     char[] str = new char[j * 2];
     int k = 0;
-    for (int i = 0; i < j; i++)
-    {
+    for (int i = 0; i < j; i++) {
       byte byte0 = arr[i];
       str[(k++)] = hexDigits[(byte0 >>> 4 & 0xF)];
       str[(k++)] = hexDigits[(byte0 & 0xF)];
     }
     return new String(str);
   }
-  
+
 //  public static void main(String[] args)
 //  {
 //    md5encrypt("invoke NumberQuery tx 13671346001 13671346002 13671346003 13671346004 13671346005 13671346006 13671346007 13671346008 13671346009 13671346010 13671346011 13671346012 13671346013 13671346014 13671346015 13671346016 13671346017 13671346018CommandInvoke invoke NumberQuery tx 13671346001 13671346002 13671346003 13671346004 13671346005 13671346006 13671346007 13671346008 13671346009 13671346010 13671346011 13671346012 13671346013 13671346014 13671346015 13671346016 13671346017 13671346018invoke NumberQuery tx 13671346001 13671346002 13671346003 13671346004 13671346005 13671346006 13671346007 13671346008 13671346009 13671346010 13671346011 13671346012 13671346013 13671346014 13671346015 13671346016 13671346017 13671346018CommandInvoke invoke NumberQuery tx 13671346001 13671346002 13671346003 13671346004 13671346005 13671346006 13671346007 13671346008 13671346009 13671346010 13671346011 13671346012 13671346013 13671346014 13671346015 13671346016 13671346017 13671346018");
 //  }
   
   public static void main(String[] args)
-    throws Exception
-  {
-    String content = "hid=36a8cd4e2b6c3ae939ad4ecf4356de15&nums=13800000001";
+          throws Exception {
+    String content = "hid=36a8cd4e2b6c3ae939ad4ecf4356de15&nums=13896940126";
     String password = "Sogou$Haoma$YDCY";
     
     System.out.println("src: " + content);
@@ -175,7 +136,7 @@ public class EncryptUtil
     
     
     String a = "Uaqj9WpbUdh3GfvjEVEkI57TWt7Jkq8vcKCrvstGlR3NTAI_h3KyzWP2XGhc4RMcY_GK0Pl6t-j8otPtX4d2Pg";
-           a = "Uaqj9WpbUdh3GfvjEVEkI57TWt7Jkq8vcKCrvstGlR3NTAI/h3KyzWP2XGhc4RMcCFXrt18zcF/5QQzT8Wd11g==";
+    a = "Uaqj9WpbUdh3GfvjEVEkI57TWt7Jkq8vcKCrvstGlR0dm56hIQdXKl09ZCHjI4tCge2y6XQ9Z1PSJq1eq2HSF2lqXxabytgOtSpmjd0nQB9sA8yxW3lAGcEjE8DetvICzRawag2s1VkslJ4xB1kAOLHeOGqO6hIG-eaqgT31dqZoWweu6KYv4YGhdfQDEfr7JQCmQfKacXK-__RhaQPmWbtRXcQnH_nD3XkbYrfKuhvif5Dy3Cl1BAr9AuUiNk7wsYC084GJioGHyTK2CtNzDGaVfDWzd0VyEphFdKByoi_quSNsMPDaIc4gWyOuX-UZ4oaqMja_YDNw67gIfuvU_bwravzZ3vGndv6Y30B4A0up1yVFx55KNDMyY-I43NGKWw4cL1mYS4vzRQNXK-zLAF2EIXWDz0TmFTf0W75UBzIlYZRJewlKDLgkvMxEnV6vrFP6q2woiDIa1clWDnVf";
   
     decryptResult = AESdecrypt(Base64Coder.decryptBASE64(a), password);
     System.out.println("de: " + new String(decryptResult));

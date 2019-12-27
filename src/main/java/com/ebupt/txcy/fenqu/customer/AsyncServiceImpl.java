@@ -103,6 +103,7 @@ public class AsyncServiceImpl implements AsyncService {
             if (allChannle.indexOf("360") != -1) {
                 //发起360查询
                 queryChannel = serviceFeign360.consumer(new PhoneList(newList));
+                logger.info("#####"+queryChannel.getCode());
                 if (queryChannel == null || !"0000".equals(queryChannel.getCode())) {
                     logger.error("360查询失败");
                 } else {
@@ -155,6 +156,10 @@ public class AsyncServiceImpl implements AsyncService {
                     maps.put("ali", queryChannel);
                 }
             }
+            if(maps.isEmpty()){
+               logger.info("channel search err");
+               return;
+            }
 
             //3、获取优先处理渠道
             //返回数据处理
@@ -168,8 +173,6 @@ public class AsyncServiceImpl implements AsyncService {
             
             if (whitePhone != null && whitePhone.size() >0){
                 dbTask.writeWhite(whitePhone);
-                
-                
     
                 //去除txcy_whitelist_week 数据
                 //arrayList = new ArrayList<>(delWhiteWeek( arrayList));

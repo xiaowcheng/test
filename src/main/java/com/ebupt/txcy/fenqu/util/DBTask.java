@@ -141,7 +141,7 @@ public class DBTask
         logger.info("YellowList 没有新增数据");
       }
       if(delPhone.getPhoneList().size() > 0 ){
-        logger.info("YellowList删除数据："+addPhone.getPhoneList().size());
+        logger.info("YellowList删除数据："+delPhone.getPhoneList().size());
         serviceFeignYellow.delYellowList(delPhone);
       }else{
         logger.info("YellowList 没有删除数据");
