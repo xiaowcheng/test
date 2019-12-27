@@ -12,6 +12,12 @@ public class QueryChannel {
     
     private int name;
     
+    public QueryChannel() {
+    }
+    
+    
+    
+    
     public QueryChannel(String code, String msg, List<QueryRespItem> data, int name) {
         System.out.println("----------"+code);
         this.code = code;
