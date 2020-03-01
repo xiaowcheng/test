@@ -1,6 +1,7 @@
 package com.ebupt.txcy.fenqu.controller;
 
 import com.ebupt.txcy.fenqu.customer.AsyncService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -21,12 +22,12 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import java.util.*;
 import java.util.concurrent.Executor;
 
-
+@Slf4j
 @Component
 @EnableKafka
 public class FenquController{
 
-    private static final Logger logger = LoggerFactory.getLogger(FenquController.class);
+    
     
     @Autowired
     private AsyncService asyncService;
@@ -90,10 +91,10 @@ public class FenquController{
     // 批量监听
     @KafkaListener(topics = "${kafka.Topic}", containerFactory = "batchFactory")
     public void kafkaListenBatch(List<ConsumerRecord<?, String>> records, Acknowledgment ack){
-        logger.info("records.size:"+String.valueOf(records.size()));
+        log.info("records.size:"+String.valueOf(records.size()));
         List<String> phoneList = new ArrayList<>(MAX_POLL_RECORDS_CONFIG);
         for (ConsumerRecord<?, String> record : records){
-//            logger.info("批量监听------:"+record.value());
+            log.debug("批量监听------:"+record.value());
             phoneList.add(record.value());
             ack.acknowledge();//手动提交偏移量            
         }

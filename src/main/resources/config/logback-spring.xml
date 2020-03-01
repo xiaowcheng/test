@@ -11,10 +11,9 @@
     <!-- 应用名称 -->
     <springProperty scope="context" name="APP_NAME" source="spring.application.name"/>
 
-    <property name="CONSOLE_LOG_FORMAT"
-              value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%t]){faint} %clr(%-40.40logger){cyan} %clr(:){faint} %m%n%wex" />
-    <property name="FILE_LOG_FORMAT"
-    value="${FILE_LOG_FORMAT:-%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %logger{39}:%line : %m%n}"/>
+    <property name="LOG_PATTERN"
+              value="%d{yyyy-MM-dd} %d{HH:mm:ss.SSSZ} %-5level %logger{36} [${APP_NAME}, %16X{X-B3-TraceId}, %16X{X-B3-SpanId}, %5X{X-Span-Export}], [%15.15t]: %m%n%wEx"/>
+
     <!-- 日志存放路径 -->
     <property name="LOG_PATH" value="${LOG_PATH:-/var/log/${APP_NAME}}"/>
     <!-- 保留日志的天数 -->
@@ -25,7 +24,7 @@
     <!-- 控制台日志 -->
     <appender name="CONSOLE_LOG" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>${CONSOLE_LOG_FORMAT}</pattern>
+            <pattern>${LOG_PATTERN}</pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -48,7 +47,7 @@
             <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
         </rollingPolicy>
         <encoder>
-            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <pattern>${LOG_PATTERN}</pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -69,7 +68,7 @@
             <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
         </rollingPolicy>
         <encoder>
-            <pattern>${FILE_LOG_FORMAT}</pattern>
+            <pattern>${LOG_PATTERN}</pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -101,9 +100,9 @@
     </appender>
 
     <root level="INFO">
-        <appender-ref ref="CONSOLE_LOG"/>
-        <appender-ref ref="INFO_FILE_LOG"/>
-        <appender-ref ref="ERROR_FILE_LOG"/>
-        <appender-ref ref="ASYNC_LOG"/>
+        <appender-ref ref="CONSOLE_LOG" />
+        <appender-ref ref="INFO_FILE_LOG" />
+        <appender-ref ref="ERROR_FILE_LOG" />
+        <appender-ref ref="ASYNC_LOG" />
     </root>
 </configuration>

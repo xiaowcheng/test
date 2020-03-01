@@ -8,15 +8,15 @@ import com.ebupt.txcy.fenqu.vo.channel.QueryResp;
 import com.ebupt.txcy.fenqu.vo.channel.QueryRespItem;
 import com.ebupt.txcy.fenqu.vo.channel.ThirdInfo;
 import com.ebupt.txcy.fenqu.vo.YellowInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 
+@Slf4j
 public class CompareUtil {
-  
-  public static final Logger logger = LoggerFactory.getLogger(CompareUtil.class);
   
   @Value("${channel.firstSourceid}")
   public int firstSourceid ;
@@ -187,6 +187,11 @@ public class CompareUtil {
   }
   
   public void isWhitephone(int size) {
+    /*this.whitephoneMap.entrySet().forEach(entry -> {
+      if(entry.getValue() == size){
+        this.whitephoneList.add(String.valueOf(entry.getValue()));
+      }
+    });*/
     Iterator<String> phones = this.whitephoneMap.keySet().iterator();
     while (phones.hasNext())
     {
@@ -221,7 +226,7 @@ public class CompareUtil {
     }
     catch (Exception e)
     {
-      this.logger.error("", e);
+      log.error("{}", e.getMessage());
     }
   }
   
@@ -246,10 +251,9 @@ public class CompareUtil {
     
     while (iterator.hasNext())
     {
-      
       try{
         QueryChannel queryResp = iterator.next();
-        this.logger.info("list length is {}", queryResp.getData().size());
+        log.info("[BIZ]list length is {}", queryResp.getData().size());
         for (QueryRespItem queryRespItem: queryResp.getData())
         {
           dealInfoandWhite(queryRespItem,queryResp.getName());
@@ -257,7 +261,7 @@ public class CompareUtil {
      }
       catch (Exception e)
       {
-        this.logger.error("CompareUtil:", e);
+        log.error("CompareUtil:", e.getMessage());
       }
     }
     isWhitephone(maps.size());

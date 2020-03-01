@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import com.ebupt.txcy.fenqu.vo.channel.Type;
 import com.ebupt.txcy.fenqu.vo.channel.TypeConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
@@ -13,9 +11,6 @@ import org.springframework.stereotype.Component;
 @Configuration
 public class TypeUtil
 {
-  private static Logger logger = LoggerFactory.getLogger(TypeUtil.class);
-  
-  
   @Autowired
   private TypeConstants typeConstants;
 

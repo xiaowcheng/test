@@ -46,7 +46,7 @@ public class RedisTest {
         byte[] a = longToBytes(1575625952258l);
         for (byte c:
              a) {
-            System.out.println(c);
+//            System.out.println(c);
         }
     }
     

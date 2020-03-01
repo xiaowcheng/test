@@ -17,6 +17,7 @@ import com.ebupt.txcy.fenqu.vo.spamlib.Spamlib;
 import com.ebupt.txcy.fenqu.vo.yellow.PhoneList;
 import com.ebupt.txcy.fenqu.vo.yellow.YellowpagelibObj;
 import com.ebupt.txcy.fenqu.vo.yellowbak.Yellowpagelibbak;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,10 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-
+@Slf4j
 @Service
 public class DBTask
 {
-  private final Logger logger = LoggerFactory.getLogger(DBTask.class);
   
   @Resource
   ServiceFeignYellow serviceFeignYellow;
@@ -63,13 +63,13 @@ public class DBTask
     }
     catch (Exception e)
     {
-      this.logger.error("[Exception]", e);
+      log.error("[BIZ][Exception]", e);
     }
     catch (Throwable t)
     {
-      this.logger.error("[Exception]", t);
+      log.error("[BIZ][Exception]", t);
     }
-    this.logger.info("DBTask over---");
+    log.info("[BIZ]DBTask over---");
   }
   
   public String getNewPhone(String phone)
@@ -108,8 +108,8 @@ public class DBTask
     ArrayList<YellowInfo> authArray = (ArrayList)yellowMap.get(Integer.valueOf(0));
     ArrayList<YellowInfo> noauthArray = (ArrayList)yellowMap.get(Integer.valueOf(1));
     
-    this.logger.debug("yellowMap authArray size is " + authArray.size());
-    this.logger.debug("yellowMap noauthArray size is " + noauthArray.size());
+    log.debug("[BIZ]yellowMap authArray size is :" + authArray.size());
+    log.debug("[BIZ]yellowMap noauthArray size is :" + noauthArray.size());
 
     try
     {
@@ -135,21 +135,21 @@ public class DBTask
       delPhone.setPhoneList(delList);
   
       if(addPhone.getPhoneList().size() > 0 ){
-        logger.info("YellowList新增数据："+addPhone.getPhoneList().size());
+        log.info("[BIZ]YellowList新增数据："+addPhone.getPhoneList().size());
         serviceFeignYellow.addYellowList(addPhone);
       }else{
-        logger.info("YellowList 没有新增数据");
+        log.info("[BIZ]YellowList 没有新增数据");
       }
       if(delPhone.getPhoneList().size() > 0 ){
-        logger.info("YellowList删除数据："+delPhone.getPhoneList().size());
+        log.info("[BIZ]YellowList删除数据："+delPhone.getPhoneList().size());
         serviceFeignYellow.delYellowList(delPhone);
       }else{
-        logger.info("YellowList 没有删除数据");
+        log.info("[BIZ]YellowList 没有删除数据");
       }
     }
     catch (Exception e)
     {
-      this.logger.error("[Exception]", e);
+      log.error("[Exception]", e);
     }
     
     try
@@ -175,23 +175,23 @@ public class DBTask
       delPhone.setPhoneList(delList);
       
       if(addPhone.getPhoneList().size() > 0 ){
-        logger.info("YellowbakList 新增数据："+addPhone.getPhoneList().size());
+        log.info("YellowbakList 新增数据："+addPhone.getPhoneList().size());
         serviceFeignYellowbak.addYellowbakList(addPhone);
       }else{
-        logger.info("YellowbakList 没有新增数据");
+        log.info("YellowbakList 没有新增数据");
       }
       if(delPhone.getPhoneList().size() > 0 ){
-        logger.info("YellowbakList 删除数据："+delPhone.getPhoneList().size());
+        log.info("YellowbakList 删除数据："+delPhone.getPhoneList().size());
         serviceFeignYellowbak.delYellowbakList(delPhone);
       }else{
-        logger.info("YellowbakList 没有删除数据");
+        log.info("YellowbakList 没有删除数据");
       }
       
       
     }
     catch (Exception e)
     {
-      this.logger.error("[Exception]", e);
+      log.error("[Exception]", e);
     }
   }
   
@@ -200,7 +200,7 @@ public class DBTask
       return;
     }
   
-    this.logger.debug("arrayList size is " + arrayList.size());
+    log.debug("arrayList size is " + arrayList.size());
   
     try {
       
@@ -209,7 +209,7 @@ public class DBTask
       for (List<ThirdInfo> array : arrayList) {
         int i = 0;
         if(array == null || array.size() <= 0){
-           logger.info("array is null");
+           log.info("array is null");
            return;
         }
         for (ThirdInfo info : array) {
@@ -228,38 +228,38 @@ public class DBTask
   
   
       if(deliver.getPhoneList().size() > 0 ){
-        logger.info("DeliverList 新增数据："+deliver.getPhoneList().size());
+        log.info("[BIZ]DeliverList 新增数据："+deliver.getPhoneList().size());
         serviceFeignDeliver.addDeliverList(deliver);
       }else{
-        logger.info("DeliverList 没有新增数据");
+        log.info("[BIZ]DeliverList 没有新增数据");
       }
       if(spamlib.getPhoneList().size() > 0 ){
-        logger.info("SpamlibList 新增数据："+spamlib.getPhoneList().size());
+        log.info("[BIZ]SpamlibList 新增数据："+spamlib.getPhoneList().size());
         serviceFeignSpamlib.addSpamlibList(spamlib);
       }else{
-        logger.info("SpamlibList 没有新增数据");
+        log.info("[BIZ]SpamlibList 没有新增数据");
       }
       
     }
     catch (Exception e)
     {
-      this.logger.error("[Exception]", e);
+      log.error("[BIZ][Exception]", e);
     }
   }
   public void writeWhite(Set whitePhone){
     if (whitePhone == null || whitePhone.size() <= 0) {
-      logger.info("third rerun white_week data is null");
+      log.info("[BIZ]third rerun white_week data is null");
       return;
     }
   
     try
     {
-      logger.info("white_week新增数据："+whitePhone.size());
+      log.info("[BIZ]white_week新增数据："+whitePhone.size());
       whitePhoneWeekService.saveRedisAll(whitePhone);
     }
     catch (Exception e)
     {
-      this.logger.error("[Exception]", e);
+      log.error("[BIZ][Exception]", e);
     }
   }
 }

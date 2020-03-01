@@ -5,6 +5,7 @@ import com.ebupt.txcy.fenqu.util.CompareUtil;
 import com.ebupt.txcy.fenqu.util.DBTask;
 import com.ebupt.txcy.fenqu.util.RedisUtil;
 import com.ebupt.txcy.fenqu.vo.channel.*;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+@Slf4j
 @Service
 public class AsyncServiceImpl implements AsyncService {
-    
-    private static final Logger logger = LoggerFactory.getLogger(AsyncServiceImpl.class);
     
     @Resource
     private RedisUtil redisUtil;
@@ -57,13 +57,13 @@ public class AsyncServiceImpl implements AsyncService {
     
     @Override
     public void executeAsync(List<String> phoneList) {
-        logger.info("start executeAsync");
+        log.debug("[SVC]start executeAsync");
         phoneList = new ArrayList<>(new HashSet<>(phoneList)) ;
         List<String> newList = new ArrayList(phoneList.size());
         try {
             //1、号码处理
             for (int i = 0; i < phoneList.size(); i++) {
-//             logger.info("i:" + i + ";phone:" + phoneList.get(i));
+             log.debug("i:" + i + ";phone:" + phoneList.get(i));
                 if (phoneList.size() > 0) {
                     String phone = (String) phoneList.get(i);
                     String newphone = null;
@@ -84,14 +84,14 @@ public class AsyncServiceImpl implements AsyncService {
 //            return;
             //2、获取 全部渠道配置
             if (newList.size() <=0) {
-                logger.info("没有数据");
+                log.warn("数据格式不正确，没有数据");
                 return;
             }
 
             //去除txcy_whitelist_week 数据
             newList = delWhiteWeek(newList);
             if (newList.size() <=0) {
-                logger.info("phonelist all in redis white_week");
+                log.warn("号码数据均存在redis中，即均已处理过");
                 return;
             }
 
@@ -103,9 +103,9 @@ public class AsyncServiceImpl implements AsyncService {
             if (allChannle.indexOf("360") != -1) {
                 //发起360查询
                 queryChannel = serviceFeign360.consumer(new PhoneList(newList));
-                logger.info("#####"+queryChannel.getCode());
+                log.debug("#####"+queryChannel.getCode());
                 if (queryChannel == null || !"0000".equals(queryChannel.getCode())) {
-                    logger.error("360查询失败");
+                    log.warn("360查询失败");
                 } else {
                     maps.put("360", queryChannel);
                 }
@@ -114,7 +114,7 @@ public class AsyncServiceImpl implements AsyncService {
                 //发起tx查询
                 queryChannel = serviceFeignTx.consumer(new PhoneList(newList));
                 if (queryChannel == null || !"0000".equals(queryChannel.getCode())) {
-                    logger.error("tx查询失败");
+                    log.warn("tx查询失败");
                 } else {
                     maps.put("tx", queryChannel);
                 }
@@ -123,7 +123,7 @@ public class AsyncServiceImpl implements AsyncService {
                 //发起sougou查询
                 queryChannel = serviceFeignSougou.consumer(new PhoneList(newList));
                 if (queryChannel == null || !"0000".equals(queryChannel.getCode())) {
-                    logger.error("sougou查询失败");
+                    log.warn("sougou查询失败");
                 } else {
                     maps.put("sougou", queryChannel);
                 }
@@ -132,7 +132,7 @@ public class AsyncServiceImpl implements AsyncService {
                 //发起dianhuabang查询
                 queryChannel = serviceFeignDianhuabang.consumer(new PhoneList(newList));
                 if (queryChannel == null || !"0000".equals(queryChannel.getCode())) {
-                    logger.error("dianhuabang查询失败");
+                    log.warn("dianhuabang查询失败");
                 } else {
                     maps.put("dianhuabang", queryChannel);
                 }
@@ -141,7 +141,7 @@ public class AsyncServiceImpl implements AsyncService {
                 //发起baidu查询
                 queryChannel = serviceFeignBaidu.consumer(new PhoneList(newList));
                 if (queryChannel == null || !"0000".equals(queryChannel.getCode())) {
-                    logger.error("baidu查询失败");
+                    log.warn("baidu查询失败");
                 } else {
                     maps.put("baidu", queryChannel);
 
@@ -151,16 +151,18 @@ public class AsyncServiceImpl implements AsyncService {
                 //发起ali查询
                 queryChannel = serviceFeignAli.consumer(new PhoneList(newList));
                 if (queryChannel == null || !"0000".equals(queryChannel.getCode())) {
-                    logger.error("ali查询失败");
+                    log.warn("ali查询失败");
                 } else {
                     maps.put("ali", queryChannel);
                 }
             }
             if(maps.isEmpty()){
-               logger.info("channel search err");
+               log.error("所有渠道查询均失败，核实渠道信息");
                return;
             }
 
+            
+            
             //3、获取优先处理渠道
             //返回数据处理
             //4、调用入库逻辑（1、入库认证黄页、非认证、标记、其他）
@@ -179,7 +181,7 @@ public class AsyncServiceImpl implements AsyncService {
             }
             
             if (arrayList == null || arrayList.size() <=0) {
-                logger.info("phonelist all in redis white_week");
+                log.info("所有号码在渠道侧均为白名单");
                 return;
             }
             
@@ -188,7 +190,7 @@ public class AsyncServiceImpl implements AsyncService {
         }catch(Exception e){
             e.printStackTrace();
         }
-        logger.info("end executeAsync");
+        log.debug("[SVC]end executeAsync");
     }
     
     public List delWhiteWeek(List list){
@@ -211,7 +213,7 @@ public class AsyncServiceImpl implements AsyncService {
 //        System.out.println(sdf.format(new Date()));
             return new ArrayList(set);
         }catch (Exception e){
-            logger.error("redis del whiteweek err"+e);
+            log.error("redis del whiteweek err"+e.getMessage());
             return list;
         }
     }

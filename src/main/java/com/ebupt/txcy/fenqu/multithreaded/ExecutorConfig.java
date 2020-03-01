@@ -1,5 +1,6 @@
 package com.ebupt.txcy.fenqu.multithreaded;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,12 +11,10 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
-
+@Slf4j
 @Configuration
 @EnableAsync
 public class ExecutorConfig {
-
-    private static final Logger logger = LoggerFactory.getLogger(ExecutorConfig.class);
     
     @Value("${threadPool.coreSize}")
     private  int coreSize;
@@ -32,7 +31,7 @@ public class ExecutorConfig {
 
     @Bean
     public Executor asyncServiceExecutor() {
-        logger.info("start asyncServiceExecutor");
+        log.info("[SVC]start asyncServiceExecutor");
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         //配置核心线程数
         executor.setCorePoolSize(coreSize);
