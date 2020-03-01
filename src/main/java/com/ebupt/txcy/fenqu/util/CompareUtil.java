@@ -226,7 +226,7 @@ public class CompareUtil {
     }
     catch (Exception e)
     {
-      log.error("{}", e.getMessage());
+      log.error("{}", e);
     }
   }
   
@@ -261,7 +261,7 @@ public class CompareUtil {
      }
       catch (Exception e)
       {
-        log.error("CompareUtil:", e.getMessage());
+        log.error("CompareUtil:", e);
       }
     }
     isWhitephone(maps.size());

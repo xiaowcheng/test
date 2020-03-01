@@ -188,7 +188,7 @@ public class AsyncServiceImpl implements AsyncService {
             dbTask.run( arrayList, (ConcurrentHashMap) yellowMap);
 
         }catch(Exception e){
-            e.printStackTrace();
+            log.error("Bad thing:",e);
         }
         log.debug("[SVC]end executeAsync");
     }
@@ -213,7 +213,7 @@ public class AsyncServiceImpl implements AsyncService {
 //        System.out.println(sdf.format(new Date()));
             return new ArrayList(set);
         }catch (Exception e){
-            log.error("redis del whiteweek err"+e.getMessage());
+            log.error("redis del whiteweek err:",e);
             return list;
         }
     }

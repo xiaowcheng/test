@@ -41,7 +41,7 @@ public class RedisUtil {
             }
             return true;
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return false;
         }
     }
@@ -64,7 +64,7 @@ public class RedisUtil {
         try {
             return redisTemplate.hasKey(key);
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return false;
         }
     }
@@ -105,7 +105,7 @@ public class RedisUtil {
             redisTemplate.opsForValue().set(key, value);
             return true;
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return false;
         }
     }
@@ -126,7 +126,7 @@ public class RedisUtil {
             }
             return true;
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return false;
         }
     }
@@ -188,7 +188,7 @@ public class RedisUtil {
             redisTemplate.opsForHash().putAll(key, map);
             return true;
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return false;
         }
     }
@@ -208,7 +208,7 @@ public class RedisUtil {
             }
             return true;
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return false;
         }
     }
@@ -225,7 +225,7 @@ public class RedisUtil {
             redisTemplate.opsForHash().put(key, item, value);
             return true;
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return false;
         }
     }
@@ -246,7 +246,7 @@ public class RedisUtil {
             }
             return true;
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return false;
         }
     }
@@ -302,7 +302,7 @@ public class RedisUtil {
         try {
             return redisTemplate.opsForSet().members(key);
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return null;
         }
     }
@@ -317,7 +317,7 @@ public class RedisUtil {
         try {
             return redisTemplate.opsForSet().isMember(key, value);
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return false;
         }
     }
@@ -332,7 +332,7 @@ public class RedisUtil {
         try {
             return redisTemplate.opsForSet().add(key, values);
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return 0;
         }
     }
@@ -352,7 +352,7 @@ public class RedisUtil {
             }
             return count;
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return 0;
         }
     }
@@ -366,7 +366,7 @@ public class RedisUtil {
         try {
             return redisTemplate.opsForSet().size(key);
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return 0;
         }
     }
@@ -382,7 +382,7 @@ public class RedisUtil {
             Long count = redisTemplate.opsForSet().remove(key, values);
             return count;
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return 0;
         }
     }
@@ -398,7 +398,7 @@ public class RedisUtil {
             
             return redisTemplate.opsForSet().difference(key,collection);
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return null;
         }
     }
@@ -413,7 +413,7 @@ public class RedisUtil {
         try {
             return redisTemplate.opsForSet().isMember(key,object);
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return true;
         }
     }
@@ -430,7 +430,7 @@ public class RedisUtil {
         try {
             return redisTemplate.opsForList().range(key, start, end);
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return null;
         }
     }
@@ -444,7 +444,7 @@ public class RedisUtil {
         try {
             return redisTemplate.opsForList().size(key);
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return 0;
         }
     }
@@ -459,7 +459,7 @@ public class RedisUtil {
         try {
             return redisTemplate.opsForList().index(key, index);
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return null;
         }
     }
@@ -475,7 +475,7 @@ public class RedisUtil {
             redisTemplate.opsForList().rightPush(key, value);
             return true;
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return false;
         }
     }
@@ -495,7 +495,7 @@ public class RedisUtil {
             }
             return true;
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return false;
         }
     }
@@ -511,7 +511,7 @@ public class RedisUtil {
             redisTemplate.opsForList().rightPushAll(key, value);
             return true;
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return false;
         }
     }
@@ -531,7 +531,7 @@ public class RedisUtil {
             }
             return true;
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return false;
         }
     }
@@ -548,7 +548,7 @@ public class RedisUtil {
             redisTemplate.opsForList().set(key, index, value);
             return true;
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return false;
         }
     }
@@ -565,7 +565,7 @@ public class RedisUtil {
             Long remove = redisTemplate.opsForList().remove(key, count, value);
             return remove;
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return 0;
         }
     }
@@ -581,7 +581,7 @@ public class RedisUtil {
             Long remove = redisTemplate.opsForHyperLogLog().add(key,objects);
             return remove;
         } catch (Exception e) {
-            log.error("[SVC]{}",e.getMessage());
+            log.error("[SVC]{}",e);
             return 0;
         }
     }

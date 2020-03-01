@@ -14,8 +14,8 @@ public interface ChannelServiceFeignClientInterface {
 ////    @Headers("Content-type: application/json")
 //    WhiteResp consumer(RequestBody requestBody);
     
-    @PostMapping("/test")
-    String test(@RequestParam("str") String str);
+//    @PostMapping("/test")
+//    String test(@RequestParam("str") String str);
     
     @PostMapping(value ="/txcy/sysWhiteList/v1/addNumber")
     String consumer(@RequestBody PhoneList phoneList);
@@ -27,10 +27,10 @@ public interface ChannelServiceFeignClientInterface {
 //        public WhiteResp consumer( RequestBody requestBody) {
 //            return new WhiteResp();
 //        }
-        @Override
-        public String test(String str) {
-            return "1";
-        }
+//        @Override
+//        public String test(String str) {
+//            return "1";
+//        }
     
         @Override
         public String consumer(PhoneList phoneList){
